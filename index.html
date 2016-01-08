@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Qed by quandora</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Qed</h1>
+      <h2 class="project-tagline">Quandora markdown editor</h2>
+      <a href="https://github.com/quandora/qed" class="btn">View on GitHub</a>
+      <a href="https://github.com/quandora/qed/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/quandora/qed/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="qed" class="anchor" href="#qed" aria-hidden="true"><span class="octicon octicon-link"></span></a>qed</h1>
+
+<blockquote>
+<p>Quandora markdown editor</p>
+</blockquote>
+
+<p>The editor aim is to provide an easy to use markdown editor for both developers and regular users. It still remainins a code source editor but it tries to give an apercu of the final HTML rendering while typing. For more demanding users there is also a live HTML preview available with scroll synchronization. </p>
+
+<p>Its primary goal is to write comments or small / medium documents. It is not especially designed to deal with large markdown documents.</p>
+
+<p>The editor is implemented in pure javascript and it is based on the <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_Editable">Content Editable</a> browsers capability. </p>
+
+<h2>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h2>
+
+<p>There are no dependencies for the core part of the editor. 
+Only two optional dependencies are needed when using the preview and live preview feature:</p>
+
+<ul>
+<li>
+<a href="https://github.com/chjj/marked">marked.js</a> - a Markdown parser which is needed to generate the HTML preview (only needed when using the preview feature)</li>
+<li>
+<a href="https://github.com/polymer/MutationObservers">MutationObserver.js</a> - A Mutation Observers Polyfill which is needed for the live preview feature on IE9</li>
+</ul>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements:</h2>
+
+<p>Any <em>evergreen</em> browser (i.e. Chrome, Safari, Firefox, IE10+). To work in IE 9 it requires the <code>MutationObserver.js</code> dependency.</p>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>Markdown syntax highlighting and HTML apercu or hints when possible.</li>
+<li>Markdown syntax autocompletion.</li>
+<li>Live preview (requires marked.js dependency)</li>
+<li>Native spellcheck (uses the browser <em>content editable</em> capability).</li>
+<li>Copy / Paste and customizable drag / drop. </li>
+<li>HTML pasted content is converted to markdown (not supported on IE).</li>
+<li>Fully configurable suggest / autocompletion support.</li>
+<li>Extensibility through custom actions.</li>
+<li>Minimal mode for inline editing (with no toolbar)</li>
+<li>Editor mode with a customizable toolbar (you can remove or add custom actions as you want)</li>
+<li>Full Page mode - maximize to the size of the browser client area.</li>
+<li>Customizable stylesheet for both toolbar and editor content.</li>
+</ul>
+
+<p><strong>To be implemented</strong>:</p>
+
+<ul>
+<li>Automatic reference-style management: keep link definitions and references in sync.
+This will make possible to insert <em>human friendly</em> links by inserting link references and automatically manage the link definitions.</li>
+</ul>
+
+<h2>
+<a id="distribution-files" class="anchor" href="#distribution-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Distribution files</h2>
+
+<p>The editor is distributed as one default css file and a javascript file that comes in 3 different flavors depending on your needs:</p>
+
+<ul>
+<li>Default CSS file: <code>src/editor.css</code>
+</li>
+<li>JS files:
+
+<ul>
+<li>
+<code>build/qed-all.js</code> - include the editor code and all dependencies (marked.js and MutationObserver.js).</li>
+<li>
+<code>build/qed-core.js</code> - include the editor code and the MutationObserver.js dependency.</li>
+<li>
+<code>build/qed.js</code>- include only the editor code. No dependencies are included.</li>
+</ul>
+</li>
+</ul>
+
+<p>The minified versions of these files are ending in <code>.min.js</code>.</p>
+
+<p>The <code>build/qed.min.js</code> file is about <strong>57K</strong> and gziped is about <strong>15K</strong>.</p>
+
+<h2>
+<a id="building" class="anchor" href="#building" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building</h2>
+
+<p>To build the editor you need <a href="http://gruntjs.com/">Grunt</a>. To install grunt and get started with, see <a href="http://gruntjs.com/getting-started">http://gruntjs.com/getting-started</a></p>
+
+<p>You need first to install the project build dependencies before running the build.<br>
+Go to the project directory and run: (you should do this only the once to locally download dependencies)</p>
+
+<div class="highlight highlight-source-shell"><pre>npm install</pre></div>
+
+<p>Then to build simply run:</p>
+
+<div class="highlight highlight-source-shell"><pre>grunt</pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>For more details look into the sources and in the <code>demo</code> directory.</p>
+
+<h2>
+<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demo</h2>
+
+<p>You can see a live demo <a href="">here</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/quandora/qed">Qed</a> is maintained by <a href="https://github.com/quandora">quandora</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
