@@ -25,11 +25,13 @@ Any *evergreen* browser (i.e. Chrome, Safari, Firefox, IE10+). To work in IE 9 i
 * Live preview (requires marked.js dependency)
 * Native spellcheck (uses the browser *content editable* capability).
 * Copy / Paste and customizable drag / drop. 
-* HTML pasted content is converted to markdown (not supported on IE)
+* HTML pasted content is converted to markdown (not supported on IE).
 * Fully configurable suggest / autocompletion support.
 * Extensibility through custom actions.
-* Optional toolbar extensible thorugh custom actions.
-* Customizable stylesheet
+* Minimal mode for inline editing (with no toolbar)
+* Editor mode with a customizable toolbar (you can remove or add custom actions as you want)
+* Full Page mode - maximize to the size of the browser client area.
+* Customizable stylesheet for both toolbar and editor content.
 
 **To be implemented**:
 * Automatic reference-style management: keep link definitions and references in sync.
