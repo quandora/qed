@@ -17,7 +17,7 @@ Only two optional dependencies are needed when using the preview and live previe
 * [MutationObserver.js](https://github.com/polymer/MutationObservers) - A Mutation Observers Polyfill which is needed for the live preview feature on IE9
 
 ## Requirements:
-Any "evergreen" browser (i.e. Chrome, Safari, Firefox, IE10+). To work in IE 9 it requires the MutationObserver.js dependency.
+Any *evergreen* browser (i.e. Chrome, Safari, Firefox, IE10+). To work in IE 9 it requires the MutationObserver.js dependency.
 
 ## Features
 * Markdown syntax highlighting and HTML apercu or hints when possible.
