@@ -31,9 +31,6 @@ Any "evergreen" browser (i.e. Chrome, Safari, Firefox, IE10+). To work in IE 9 i
 * Optional toolbar extensible thorugh custom actions.
 * Customizable stylesheet
 
-**Not yet implemented**:
-* find/replace
-
 **To be implemented**:
 * Automatic reference-style management: keep link definitions and references in sync.
 This will make possible to insert *human friendly* links by inserting link references and automatically manage the link definitions.
