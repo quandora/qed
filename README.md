@@ -43,8 +43,8 @@ The editor is distributed as one default css file and a javascript file that com
 
 * Default CSS file: `src/editor.css`
 * JS files:
-  * `build/qed-all.js` - include the editor code and all dependencies (marked.js and MutationObserver.js)
-  * `build/qed-core.js` - include the editor code and the MutationObserver.js dependency
+  * `build/qed-all.js` - include the editor code and all dependencies (marked.js and MutationObserver.js).
+  * `build/qed-core.js` - include the editor code and the MutationObserver.js dependency.
   * `build/qed.js`- include only the editor code. No dependencies are included.
 
 The minified versions of these files are ending in `.min.js`.
