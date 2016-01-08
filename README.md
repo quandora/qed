@@ -14,7 +14,7 @@ There are no dependencies for the core part of the editor.
 Only two optional dependencies are needed when using the preview and live preview feature:
 
 * [marked.js](https://github.com/chjj/marked) - a Markdown parser which is needed to generate the HTML preview (only needed when using the preview feature)
-* [MutationObserver.js](https://github.com/polymer/MutationObservers) - A Mutation Observers Polyfill which is needed for the live preview preview feature on IE9
+* [MutationObserver.js](https://github.com/polymer/MutationObservers) - A Mutation Observers Polyfill which is needed for the live preview feature on IE9
 
 ## Requirements:
 Any "evergreen" browser (i.e. Chrome, Safari, Firefox, IE10+). To work in IE 9 it requires the MutationObserver.js dependency.
