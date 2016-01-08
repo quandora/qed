@@ -56,7 +56,7 @@ The `build/qed.min.js` file is about **57K** and gziped is about **15K**.
 
 To build the editor you need [Grunt](http://gruntjs.com/). To install grunt and get started with, see http://gruntjs.com/getting-started
 
-You need first to install the project build dependencies before running the build. 
+You need first to install the project build dependencies before running the build.  
 Go to the project directory and run: (you should do this only the once to locally download dependencies)
 
 ```shell
