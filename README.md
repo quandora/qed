@@ -36,6 +36,7 @@ Any "evergreen" browser (i.e. Chrome, Safari, Firefox, IE10+). To work in IE 9 i
 
 **To be implemented**:
 * Automatic reference-style management: keep link definitions and references in sync.
+This will make possible to insert *human friendly* links by inserting link references and automatically managing the definitions.
 
 ## Distribution files
 
