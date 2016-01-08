@@ -1,0 +1,262 @@
+
+/* ------------------------ clearfix ---------------------------*/
+/* This section can be removed if using bootstrap */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* clearfix : http://nicolasgallagher.com/micro-clearfix-hack */
+.clearfix:before, .clearfix:after { content: " "; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { *zoom: 1; }
+
+/* ----------------------- container layout --------------------- */
+/* 
+The editor and preview height is set through javascript.
+The .qed-toolbar and .qed-panel elements requires the .clearfix class
+The .qed-toolbar-left, .qed-toolbar-right, .qed-panel > .qed-editor and .qed-panel > .qed-preview requires the .pull-left and .pull-right classes
+*/
+
+.qed-container {
+  line-height: 1.6;
+  position: relative;
+}
+
+/*.qed-panel extends .clearfix */
+
+.qed-container .qed-editor {
+  display:block;
+  width:100%;
+  float: left;
+}
+
+.qed-container .qed-preview {
+  display:none;
+  width:0;
+  float: right;
+}
+
+/* --------------------- static preview layout -------------------*/
+.qed-container.preview .qed-editor {
+  display:none !important;
+}
+
+.qed-container.preview .qed-preview {
+    display:block !important;
+    width:100% !important;
+}
+
+/* --------------------- full screen layout --------------------- */
+
+.qed-container.fullscreen {
+  z-index:10000;
+  background-color: white;
+  left: 0;
+  top:0;
+  right:0;
+  bottom:0;
+  width: '100%' !important;
+  height: '100%' !important;
+  position: fixed !important;
+}
+
+.qed-container.fullscreen .qed-editor {
+    display:block;
+    width:50%;
+}
+
+.qed-container.fullscreen .qed-preview {
+    display:block;
+    width:50%;  
+    border-left: 2px solid #f5f5f5;
+}
+
+.qed-container.fullscreen {
+    border: none;
+}
+
+/* ----------------------------- default theme ------------------*/
+.qed-container {
+    font-family: "Arial, Helvetica Neue, Helvetica, sans-serif";
+    border: 1px solid #364347;
+}
+
+.qed-toolbar {
+  background-color: #364347;
+  color: white;
+}
+
+.qed-toolbar button {
+  color: white;
+}
+
+.qed-toolbar-item:hover {
+  background-color: #5e696d;
+}  
+
+/* ----------------------------- toolbar ------------------------*/
+
+.qed-toolbar {
+  /*extends .clearfix */
+  padding: 2px;
+}
+
+.qed-toolbar-left {
+  float:left;
+  margin: 0;
+  padding: 0;
+}
+
+.qed-toolbar-right {
+  float:right;
+}
+
+.qed-toolbar > ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 2px;
+}
+
+.qed-toolbar li {
+  float: left;
+  /*margin-right: 4px;*/
+}
+
+.qed-toolbar-item {
+  cursor: pointer;
+}
+
+.qed-toolbar-separator:before {
+  content: "\00a0";
+}
+.qed-toolbar-separator {
+  width: 10px;
+  padding: 0;
+  margin: 0;
+}
+
+.qed-toolbar button {    
+    font-size: 14px;    
+    background: transparent;
+    border: none;
+    padding: 4px 8px;
+    margin: 0;    
+    cursor: pointer;
+}
+
+.qed-toolbar button:disabled {
+  cursor: default;
+  opacity: 0.3;
+}
+
+/* ---------------------------- markdown editor -----------------------*/
+
+.qed-editor {
+  overflow-y: scroll;
+  margin:0;
+  padding: 0.5em;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.6;
+  outline: none;  
+}
+
+.qed-preview {
+  overflow-y: scroll;  
+  margin:0;
+  padding: 0.5em;
+  line-height: 1.6;
+  outline: none;  
+}
+
+.qed-preview > p {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.qed-editor div {
+  display: inline;
+}
+
+.qed-editor i {
+  font-style: normal;
+  color: lightgray;
+}
+
+/* gfm autolinks */
+.qed-style-url {
+  text-decoration: underline;
+  color: #0000EE;
+}
+
+.qed-style-em {
+  font-style: italic;
+}
+
+.qed-style-strong {
+  font-weight: bold;
+}
+
+.qed-style-del {
+  text-decoration: line-through;
+}
+
+.qed-style-code {
+  font-family: Consolas, 'DejaVu Sans Mono', 'Liberation Mono', Menlo, 'Lucida Console', Courier, monospace;
+  color: gray;
+  background-color: #f7f7f7;
+}
+
+.qed-code-line {
+  font-family: Consolas, 'DejaVu Sans Mono', 'Liberation Mono', Menlo, 'Lucida Console', Courier, monospace;
+  color: gray;
+}
+
+.qed-code-line:before {
+  color: lightgray;
+  content: "\02192";
+}
+
+.qed-line[data-block] {
+  margin-left: 0.5em;
+  color: gray;
+  font-family: Consolas, 'DejaVu Sans Mono', 'Liberation Mono', Menlo, 'Lucida Console', Courier, monospace;
+}
+
+.qed-line[data-block='start'] {
+  color: brown;
+}
+
+.qed-link-text {
+  text-decoration: underline;
+  color: #0000EE;
+}
+
+.qed-link-url {
+  color: lightgray;
+}
+
+.qed-link-key {
+  color: #0000EE;
+  font-weight: bold;
+}
+
+/* used for h1 and h2 undelrines */
+.qed-editor > div[data-heading-title='1'] { line-height: 1.2 !important; font-size: 1.9em; font-weight: bolder; }
+.qed-editor > div[data-heading-title='2'] { line-height: 1.2 !important; font-size: 1.5em; font-weight: bolder; }
+
+.qed-h1, .qed-h1-alt { line-height: 1.2 !important; font-size: 1.9em; font-weight: bolder; }
+.qed-h2, .qed-h2-alt { line-height: 1.2 !important; font-size: 1.5em; font-weight: bolder; }
+.qed-h3 { line-height: 1.2 !important; font-size: 1.2em; font-weight: bolder; }
+.qed-h4 { line-height: 1.2 !important; font-size: 1.0em; font-weight: bolder; }
+.qed-h5 { line-height: 1.2 !important; font-size: 0.9em; font-weight: bolder; }
+.qed-h6 { line-height: 1.2 !important; font-size: 0.8em; font-weight: bolder; }
+
+
+.qed-br:after {
+  content: "\21B5";
+  font-size: 60%;
+  font-weight: bolder;
+  color: lightgray;
+}

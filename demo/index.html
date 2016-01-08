@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../src/editor.css">
+    <link rel="stylesheet" href="preview.css">
+    <script type='text/javascript' src='https://code.jquery.com/jquery-1.11.3.min.js'></script>
+    <script type='text/javascript' src='../build/qed-all.js'></script>
+  </head>
+<body>
+<div id='mdtbar' style='clear:both;overflow: auto;zoom: 1;' class='qed-toolbar'></div>
+<div>
+  <div style='clear:both;overflow: auto;zoom: 1;'>
+  <div style='height:300px;width:50%;float:left;' id='mdeditor' class='qed-editor' contenteditable='true'></div>
+  <div style='height:300px;width:50%;float:right;' id='mdpreview' class='qed-preview'></div>
+  </div>
+</div>
+
+<hr>
+<textarea style='height: 300px; width: 100%; padding: 0.5em' id='code'>
+
+</textarea>
+
+
+
+<hr>
+<button id='testbtn'>Test</button><button id='testbtn2'>getval</button>
+<textarea id='testdiv'>
+An h1 header
+============
+
+Paragraphs are separated by a blank line.
+
+2nd paragraph. *Italic*, **bold**, and `monospace`. Itemized lists
+look like:
+
+  * this one
+  * that one
+  * the other one
+
+Note that --- not considering the asterisk --- the actual text
+content starts at 4-columns in.
+
+> Block quotes are
+> written like so.
+>
+> They can span multiple paragraphs,
+> if you like.
+
+Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., "it's all
+in chapters 12--14"). Three dots ... will be converted to an ellipsis.
+Unicode is supported. ☺
+
+
+
+An h2 header
+------------
+
+Here's a numbered list:
+
+ 1. first item
+ 2. second item
+ 3. third item
+
+Note again how the actual text starts at 4 columns in (4 characters
+from the left side). Here's a code sample:
+
+    # Let me re-iterate ...
+    for i in 1 .. 10 { do-something(i) }
+
+As you probably guessed, indented 4 spaces. By the way, instead of
+indenting the block, you can use delimited blocks, if you like:
+
+```
+define foobar() {
+    print "Welcome to flavor country!";
+}
+```
+
+(which makes copying & pasting easier). You can optionally mark the
+delimited block for Pandoc to syntax highlight it:
+
+```python
+import time
+# Quick, count to ten!
+for i in range(10):
+    # (but not *too* quick)
+    time.sleep(0.5)
+    print i
+```
+
+</textarea>
+
+<script type="text/javascript">
+
+
+function _dumpAttrs(element) {
+    var result = "";
+    if (element.hasAttributes()) {
+       var attrs = element.attributes;
+       for(var i = 0, len=attrs.length; i < len; i++) {
+         result += " "+attrs[i].name + "='" + attrs[i].value+"'";
+       }
+    }
+    return result;
+}
+
+function _dumpElementHtmlWithCaret(element, focusNode, focusOffset) {
+  var name = element.nodeName;
+  var attrs = _dumpAttrs(element);
+  var lf = name === "DIV" ? "\n" : "";
+  if (!element.firstChild) {
+    return "<"+name+attrs+"/>";
+  } else {
+    return "<"+name+attrs+">"+lf+_dumpInnerHtmlWithCaret(element, focusNode, focusOffset)+lf+"</"+name+">"+lf;
+  }
+}
+
+function _dumpInnerHtmlWithCaret(parent, focusNode, focusOffset) {
+  var result = "";
+  var node = parent.firstChild;
+  while (node) {
+    if (node.nodeType === 3) {
+      var v;
+      if (focusNode === node) {
+        v = node.nodeValue.substring(0, focusOffset)+"|"+node.nodeValue.substring(focusOffset);
+      } else {
+        v = node.nodeValue;
+      }
+      result += v;
+    } else if (node.nodeType === 1) {
+      result += _dumpElementHtmlWithCaret(node, focusNode, focusOffset);
+    }
+    node = node.nextSibling;
+  }
+  return result;
+}
+
+function dumpHtmlWithCaret(root) {
+  var sel = window.getSelection();
+  return _dumpElementHtmlWithCaret(root, sel.focusNode, sel.focusOffset);
+}
+
+
+var code = $("#code");
+var editorElem = $("#mdeditor");
+
+
+var editor = new Qed.Editor().create(editorElem[0]);
+var preview = new Qed.Preview($("#mdpreview")[0]).connect(editor);
+var tbar = new Qed.Toolbar($("#mdtbar")[0]).connect(editor).addItems( 
+    [
+    {name: "bold", label: "Bold"},
+    {name: "italic", label: "Italic"},
+    {name: "strike", label: "Strike"},
+    "|",
+    {name: "h1", label: "H1"},
+    {name: "h2", label: "H2"},
+    {name: "h3", label: "H3"},
+    {name: "quote", label: "Q"},
+    "|",
+    {name: "ul", label: "UL"},
+    {name: "ol", label: "OL"},
+    "|",
+    {name: "code", label: "C"},
+    {name: "code-block", label: "CB"}
+    ],    
+    [
+    "<a href=''>Help</a>"
+    ]
+);
+
+editor.addChangeListener(function() {
+  code.val(dumpHtmlWithCaret(editorElem[0]));
+  //console.log('kup', e.which);
+});
+
+
+
+$("#testbtn").click(function(e) { 
+  var text = $("#testdiv").val();
+  editor.setText(text);
+});
+$("#testbtn2").click(function(e) { 
+  $("#testdiv").val(editor.getText());
+});
+
+/*
+var PREVIEW_FOCUS_LINE_ID=0;
+var preview = document.getElementById('mdpreview');
+editor.addChangeListener(function() {
+});
+*/
+
+//=======================================================
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">	
+    <script type='text/javascript' src='https://code.jquery.com/jquery-1.11.3.min.js'></script>
+    <script src='../build/qed-all.js'></script>
+  </head>
+  <body>
+
+    <textarea id='testInput' style='width:100%;height:200px'></textarea>
+<hr>
+    <textarea id='testOutput' style='width:100%;height:200px'></textarea>
+<hr>
+<button id='testBtn'>To Markdown</button>
+<hr>
+<div id='outDiv'></div>
+    <script>
+
+
+//===================================
+
+    $("#testBtn").click(function() {
+      var htmlIn = $("#testInput").val();
+      var text = Qed.toMarkdown(htmlIn);
+//      console.log(text)
+      $("#testOutput").val(text);
+    });
+
+    
+    </script>
+
+  </body>
+</html>

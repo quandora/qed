@@ -1,0 +1,14 @@
+target/
+bin/
+.gradle/
+*~
+*.class
+*.bak
+*.orig
+*.reject
+.DS_Store
+.idea
+*.iml
+.cache
+vagrant/.vagrant/machines/default/virtualbox/id
+node_modules
