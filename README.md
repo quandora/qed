@@ -100,11 +100,11 @@ For more details look into the sources and in the `demo` directory.
 
 1. See this README in the editor [here](http://quandora.github.io/qed/demo.html).
 
-The defaut toolbar theme and actions are used. The editor is opened in **full page** mode. 
+The default toolbar theme and actions are used. The editor is opened in **full page** mode. 
 
-**Note** that actions like insert link or insert image or any other actions can be customized. The insert image action is not available in the demo since it requires storage to upload images etc. But drag dropping images or inserting them through a navbar button is possible. You should just write a little bit of javascript code to enable and customize it.
+**Note** that actions like insert link or insert image or any other actions can be customized. The insert image action is not available in the demo since it requires storage to upload images etc. But drag dropping images or inserting them through a nav-bar button is possible. You should just write a little bit of javascript code to enable and customize it.
 
-Also, it is easy to define your own actions and add them to the toolbar. If you don't want a default action you just ommit her when defining the toolbar.
+Also, it is easy to define your own actions and add them to the toolbar. If you don't want a default action you just omit her when defining the toolbar.
 
 2. See the suggest feature at work [here](http://quandora.github.io/qed/suggest-demo.html).
 
