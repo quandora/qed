@@ -101,4 +101,5 @@ For more details look into the sources and in the `demo` directory.
 ## Demos
 
 * See this README in the editor [here](http://quandora.github.io/qed/demo.html).
+* See the same README but with a blue toolbar [here](http://quandora.github.io/qed/demo-blue.html).
 * See the suggest feature at work [here](http://quandora.github.io/qed/suggestion-demo.html).
