@@ -99,5 +99,20 @@ For more details look into the sources and in the `demo` directory.
 ## Demos
 
 * See this README in the editor [here](http://quandora.github.io/qed/demo.html).
-* See the same README but with a blue toolbar [here](http://quandora.github.io/qed/demo-blue.html).
+
+The defaut toolbar theme and actions are used. The editor is opened in **full page** mode. 
+
+**Note** that actions like insert link or insert image or any other actions can be customized. The insert image action is not available in the demo since it requires storage to upload images etc. But drag dropping images or inserting them through a navbar button is possible. You should just write a little bit of javascript code to enable and customize it.
+
+Also, it is easy to define your own actions and add them to the toolbar. If you don't want a default action you just ommit her when defining the toolbar.
+
 * See the suggest feature at work [here](http://quandora.github.io/qed/suggestion-demo.html).
+
+This editor is using a *blue theme* fo the toolbar (look in the `head` for the style override) and it adds a simple **suggest** functionality.
+When you type @{{LETTER}} the editor will try to suggest you countries starting with {{LETTER}}.
+
+This example is using an internal array of countries.  
+But you can also use **AJAX** to fetch the suggest matchings you want to display.
+
+I will provide you soon an example on using ajax (through JQuery) on doing this.
+
