@@ -26,7 +26,7 @@
 <p>Quandora markdown editor</p>
 </blockquote>
 
-<p>The editor aim is to provide an easy to use markdown editor for both developers and regular users. It still remainins a code source editor but it tries to give an apercu of the final HTML rendering while typing. For more demanding users there is also a live HTML preview available with scroll synchronization. </p>
+<p>The editor aim is to provide an easy to use markdown editor for both developers and regular users. It still remains a code source editor but it tries to give an apercu of the final HTML rendering while typing. For more demanding users there is also a live HTML preview available with scroll synchronization. </p>
 
 <p>Its primary goal is to write comments or small / medium documents. It is not especially designed to deal with large markdown documents.</p>
 
@@ -100,7 +100,7 @@ This will make possible to insert <em>human friendly</em> links by inserting lin
 <p>The minified versions of these files are ending in <code>.min.js</code>.<br>
 The <code>build/qed.min.js</code> file is about <strong>57K</strong> and gziped is about <strong>15K</strong>.</p>
 
-<p><strong>Note</strong>: Usually when using the markdown editor you will want to use the preview too - in that case it is better to define a custom stylesheet for the preview - oherwise you will end up with the browser defaults which are not very pretty.
+<p><strong>Note</strong>: Usually when using the markdown editor you will want to use the preview too - in that case it is better to define a custom stylesheet for the preview - otherwise you will end up with the browser defaults which are not very pretty.
 We have an example of such a stylesheet in <code>demo/preview.css</code> that you can use - it is not the best one - but surely better than the browser defaults.</p>
 
 <h2>
@@ -120,14 +120,14 @@ Go to the project directory and run: (you should do this only the once to locall
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<p>To use the editor you should include in your HTML page the editor javascript file (which one depends on your needs) and a styleshhet to configure the editor and optionally a stylesheet for the preview.<br>
+<p>To use the editor you should include in your HTML page the editor javascript file (which one depends on your needs) and a stylesheet to configure the editor and optionally a stylesheet for the preview.<br>
 You can use the default stylesheets from <code>src/editor.css</code> and <code>demo/preview.css</code>.<br>
 For the example below we will use the complete qed build (containing all the dependencies): <code>build/qed-all.min.js</code>.</p>
 
 <h3>
 <a id="including-the-required-scripts-and-sylesheets" class="anchor" href="#including-the-required-scripts-and-sylesheets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Including the required scripts and sylesheets</h3>
 
-<p>First uou need to declare the editor and the stylesheets in your page.<br>
+<p>First you need to declare the editor and the stylesheets in your page.<br>
 Put this in the page <code>head</code>:</p>
 
 <div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">link</span> <span class="pl-e">rel</span>=<span class="pl-s"><span class="pl-pds">"</span>stylesheet<span class="pl-pds">"</span></span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>path/to/editor.css<span class="pl-pds">"</span></span>&gt;
@@ -147,10 +147,27 @@ Put this in the page <code>head</code>:</p>
 <h2>
 <a id="demos" class="anchor" href="#demos" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demos</h2>
 
-<ul>
+<ol>
 <li>See this README in the editor <a href="http://quandora.github.io/qed/demo.html">here</a>.</li>
-<li>See the suggestion feature at work <a href="http://quandora.github.io/qed/suggestion-demo.html">here</a>.</li>
-</ul>
+</ol>
+
+<p>The default toolbar theme and actions are used. The editor is opened in <strong>full page</strong> mode. </p>
+
+<p><strong>Note</strong> that actions like insert link or insert image or any other actions can be customized. The insert image action is not available in the demo since it requires storage to upload images etc. But drag dropping images or inserting them through a nav-bar button is possible. You should just write a little bit of javascript code to enable and customize it.</p>
+
+<p>Also, it is easy to define your own actions and add them to the toolbar. If you don't want a default action you just omit her when defining the toolbar.</p>
+
+<ol>
+<li>See the suggest feature at work <a href="http://quandora.github.io/qed/suggest-demo.html">here</a>.</li>
+</ol>
+
+<p>The editor is using a <em>blue theme</em> fo the toolbar (look in the <code>head</code> for the style override) and it adds a simple <strong>suggest</strong> functionality.
+When you type @{{LETTER}} the editor will try to suggest you countries starting with {{LETTER}}.</p>
+
+<p>This example is using an internal array of countries.<br>
+But you can also use <strong>AJAX</strong> to fetch the suggest matchings you want to display.</p>
+
+<p>I will provide you soon an example on using ajax (through JQuery) for doing this.</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/quandora/qed">Qed</a> is maintained by <a href="https://github.com/quandora">quandora</a>.</span>
