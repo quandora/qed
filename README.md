@@ -81,7 +81,7 @@ For the example below we will use the complete qed build (containing all the dep
 
 ### Including the required scripts and sylesheets
 
-First uou need to declare the editor and the stylesheets in your page.  
+First you need to declare the editor and the stylesheets in your page.  
 Put this in the page `head`:
 
 ```html
