@@ -31,8 +31,8 @@ Any *evergreen* browser (i.e. Chrome, Safari, Firefox, IE10+). To work in IE 9 i
 * Fully configurable suggest / autocompletion support.
 * Display a configurable alert when leaving the editor page which content was modified and not saved.
 * Extensibility through custom actions.
-* Minimal mode for inline editing (with no toolbar)
-* Editor mode with a customizable toolbar (you can remove or add custom actions as you want)
+* Minimal mode for inline editing (with no toolbar).
+* Editor mode with a customizable toolbar (you can remove or add custom actions as you want).
 * Full Page mode - maximize to the size of the browser client area.
 * Customizable stylesheet for both toolbar and editor content.
 
