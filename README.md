@@ -98,7 +98,9 @@ For more details look into the sources and in the `demo` directory.
 
 ## Demos
 
-1. See this README in the editor [here](http://quandora.github.io/qed/demo.html).
+###  Readme Page Demo
+
+See this README in the editor [here](http://quandora.github.io/qed/demo.html).
 
 The default toolbar theme and actions are used. The editor is opened in **full page** mode. 
 
@@ -106,7 +108,9 @@ The default toolbar theme and actions are used. The editor is opened in **full p
 
 Also, it is easy to define your own actions and add them to the toolbar. If you don't want a default action you just omit her when defining the toolbar.
 
-2. See the suggest feature at work [here](http://quandora.github.io/qed/suggest-demo.html).
+### Suggest Feature demo
+
+See the suggest feature at work [here](http://quandora.github.io/qed/suggest-demo.html).
 
 The editor is using a *blue theme* fo the toolbar (look in the `head` for the style override) and it adds a simple **suggest** functionality.
 When you type @{{LETTER}} the editor will try to suggest you countries starting with {{LETTER}}.
