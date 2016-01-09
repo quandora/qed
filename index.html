@@ -61,9 +61,10 @@ Only two optional dependencies are needed when using the preview and live previe
 <li>Copy / Paste and customizable drag / drop. </li>
 <li>HTML pasted content is converted to markdown (not supported on IE).</li>
 <li>Fully configurable suggest / autocompletion support.</li>
+<li>Display a configurable alert when leaving the editor page which content was modified and not saved.</li>
 <li>Extensibility through custom actions.</li>
-<li>Minimal mode for inline editing (with no toolbar)</li>
-<li>Editor mode with a customizable toolbar (you can remove or add custom actions as you want)</li>
+<li>Minimal mode for inline editing (with no toolbar).</li>
+<li>Editor mode with a customizable toolbar (you can remove or add custom actions as you want).</li>
 <li>Full Page mode - maximize to the size of the browser client area.</li>
 <li>Customizable stylesheet for both toolbar and editor content.</li>
 </ul>
@@ -96,9 +97,11 @@ This will make possible to insert <em>human friendly</em> links by inserting lin
 </li>
 </ul>
 
-<p>The minified versions of these files are ending in <code>.min.js</code>.</p>
+<p>The minified versions of these files are ending in <code>.min.js</code>.<br>
+The <code>build/qed.min.js</code> file is about <strong>57K</strong> and gziped is about <strong>15K</strong>.</p>
 
-<p>The <code>build/qed.min.js</code> file is about <strong>57K</strong> and gziped is about <strong>15K</strong>.</p>
+<p><strong>Note</strong>: Usually when using the markdown editor you will want to use the preview too - in that case it is better to define a custom stylesheet for the preview - oherwise you will end up with the browser defaults which are not very pretty.
+We have an example of such a stylesheet in <code>demo/preview.css</code> that you can use - it is not the best one - but surely better than the browser defaults.</p>
 
 <h2>
 <a id="building" class="anchor" href="#building" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building</h2>
@@ -117,12 +120,21 @@ Go to the project directory and run: (you should do this only the once to locall
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
+<p>To use the editor you should include in your HTML page the editor javascript file (which one depends on your needs) and a styleshhet to configure the editor and optionally a stylesheet for the preview.<br>
+You can use the default stylesheets from <code>src/editor.css</code> and <code>demo/preview.css</code>.<br>
+For the example below we will use the complete qed build (containing all the dependencies): <code>build/qed-all.min.js</code>.</p>
+
+<p>TODO</p>
+
 <p>For more details look into the sources and in the <code>demo</code> directory.</p>
 
 <h2>
-<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demo</h2>
+<a id="demos" class="anchor" href="#demos" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demos</h2>
 
-<p>You can see a live demo <a href="http://quandora.github.io/qed/demo.html">here</a></p>
+<ul>
+<li>See this README in the editor: <a href="http://quandora.github.io/qed/demo.html">here</a>.</li>
+<li>See the suggestion feature at work <a href="http://quandora.github.io/qed/suggestion-demo.html">here</a>.</li>
+</ul>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/quandora/qed">Qed</a> is maintained by <a href="https://github.com/quandora">quandora</a>.</span>
