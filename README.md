@@ -106,7 +106,7 @@ The defaut toolbar theme and actions are used. The editor is opened in **full pa
 
 Also, it is easy to define your own actions and add them to the toolbar. If you don't want a default action you just ommit her when defining the toolbar.
 
-* See the suggest feature at work [here](http://quandora.github.io/qed/suggestion-demo.html).
+* See the suggest feature at work [here](http://quandora.github.io/qed/suggest-demo.html).
 
 This editor is using a *blue theme* fo the toolbar (look in the `head` for the style override) and it adds a simple **suggest** functionality.
 When you type @{{LETTER}} the editor will try to suggest you countries starting with {{LETTER}}.
