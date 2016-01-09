@@ -29,6 +29,7 @@ Any *evergreen* browser (i.e. Chrome, Safari, Firefox, IE10+). To work in IE 9 i
 * Copy / Paste and customizable drag / drop. 
 * HTML pasted content is converted to markdown (not supported on IE).
 * Fully configurable suggest / autocompletion support.
+* Display a configurable alert when leaving the editor page which content was modified and not saved.
 * Extensibility through custom actions.
 * Minimal mode for inline editing (with no toolbar)
 * Editor mode with a customizable toolbar (you can remove or add custom actions as you want)
@@ -48,10 +49,12 @@ The editor is distributed as one default css file and a javascript file that com
   * `build/qed-all.js` - include the editor code and all dependencies (marked.js and MutationObserver.js).
   * `build/qed-core.js` - include the editor code and the MutationObserver.js dependency.
   * `build/qed.js`- include only the editor code. No dependencies are included.
-
-The minified versions of these files are ending in `.min.js`.
-
+  
+The minified versions of these files are ending in `.min.js`.  
 The `build/qed.min.js` file is about **57K** and gziped is about **15K**.
+
+**Note**: Usually when using the markdown editor you will want to use the preview too - in that case it is better to define a custom stylesheet for the preview - oherwise you will end up with the browser defaults which are not very pretty.
+We have an example of such a stylesheet in `demo/preview.css` that you can use - it is not the best one - but surely better than the browser defaults.
 
 ## Building 
 
@@ -72,9 +75,15 @@ grunt
 
 ## Usage
 
+To use the editor you should include in your HTML page the editor javascript file (which one depends on your needs) and a styleshhet to configure the editor and optionally a stylesheet for the preview.  
+You can use the default stylesheets from `src/editor.css` and `demo/preview.css`.  
+For the example below we will use the complete qed build (containing all the dependencies): `build/qed-all.min.js`.
+
+TODO
 
 For more details look into the sources and in the `demo` directory.
 
-## Demo
+## Demos
 
-You can see a live demo [here]()
+* See this README in the editor: [here](http://quandora.github.io/qed/demo.html).
+* See the suggestion feature at work [here](http://quandora.github.io/qed/suggestion-demo.html).
