@@ -124,15 +124,31 @@ Go to the project directory and run: (you should do this only the once to locall
 You can use the default stylesheets from <code>src/editor.css</code> and <code>demo/preview.css</code>.<br>
 For the example below we will use the complete qed build (containing all the dependencies): <code>build/qed-all.min.js</code>.</p>
 
-<p>TODO</p>
+<h3>
+<a id="including-the-required-scripts-and-sylesheets" class="anchor" href="#including-the-required-scripts-and-sylesheets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Including the required scripts and sylesheets</h3>
 
-<p>For more details look into the sources and in the <code>demo</code> directory.</p>
+<p>First uou need to declare the editor and the stylesheets in your page.<br>
+Put this in the page <code>head</code>:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">link</span> <span class="pl-e">rel</span>=<span class="pl-s"><span class="pl-pds">"</span>stylesheet<span class="pl-pds">"</span></span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>path/to/editor.css<span class="pl-pds">"</span></span>&gt;
+&lt;<span class="pl-ent">link</span> <span class="pl-e">rel</span>=<span class="pl-s"><span class="pl-pds">"</span>stylesheet<span class="pl-pds">"</span></span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>path/to/preview.css<span class="pl-pds">"</span></span>&gt;
+&lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">'</span>text/javascript<span class="pl-pds">'</span></span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">'</span>path/to/qed-all.min.js<span class="pl-pds">'</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<h3>
+<a id="attach-the-editor-to-a-textarea-element" class="anchor" href="#attach-the-editor-to-a-textarea-element" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attach the editor to a <code>textarea</code> element</h3>
+
+<p>The simplest method to use the editor is to attach it to an existing <code>textarea</code> element:</p>
+
+<h3>
+<a id="more" class="anchor" href="#more" aria-hidden="true"><span class="octicon octicon-link"></span></a>More?</h3>
+
+<p>For more details look into the sources and in the <code>demo</code> directory.  </p>
 
 <h2>
 <a id="demos" class="anchor" href="#demos" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demos</h2>
 
 <ul>
-<li>See this README in the editor: <a href="http://quandora.github.io/qed/demo.html">here</a>.</li>
+<li>See this README in the editor <a href="http://quandora.github.io/qed/demo.html">here</a>.</li>
 <li>See the suggestion feature at work <a href="http://quandora.github.io/qed/suggestion-demo.html">here</a>.</li>
 </ul>
 
