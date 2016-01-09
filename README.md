@@ -79,11 +79,26 @@ To use the editor you should include in your HTML page the editor javascript fil
 You can use the default stylesheets from `src/editor.css` and `demo/preview.css`.  
 For the example below we will use the complete qed build (containing all the dependencies): `build/qed-all.min.js`.
 
-TODO
+### Including the required scripts and sylesheets
 
-For more details look into the sources and in the `demo` directory.
+First uou need to declare the editor and the stylesheets in your page.  
+Put this in the page `head`:
+
+```html
+<link rel="stylesheet" href="path/to/editor.css">
+<link rel="stylesheet" href="path/to/preview.css">
+<script type='text/javascript' src='path/to/qed-all.min.js'></script>
+```
+
+### Attach the editor to a `textarea` element
+
+The simplest method to use the editor is to attach it to an existing `textarea` element:
+
+### More?
+
+For more details look into the sources and in the `demo` directory.  
 
 ## Demos
 
-* See this README in the editor: [here](http://quandora.github.io/qed/demo.html).
+* See this README in the editor [here](http://quandora.github.io/qed/demo.html).
 * See the suggestion feature at work [here](http://quandora.github.io/qed/suggestion-demo.html).
