@@ -1,8 +1,6 @@
 # qed
 
-
 > Quandora markdown editor
-
 
 The editor aim is to provide an easy to use markdown editor for both developers and regular users. It still remainins a code source editor but it tries to give an apercu of the final HTML rendering while typing. For more demanding users there is also a live HTML preview available with scroll synchronization. 
 
