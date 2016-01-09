@@ -114,4 +114,4 @@ When you type @{{LETTER}} the editor will try to suggest you countries starting 
 This example is using an internal array of countries.  
 But you can also use **AJAX** to fetch the suggest matchings you want to display.
 
-I will provide you soon an example on using ajax (through JQuery) on doing this.
+I will provide you soon an example on using ajax (through JQuery) for doing this.
