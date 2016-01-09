@@ -2,7 +2,7 @@
 
 > Quandora markdown editor
 
-The editor aim is to provide an easy to use markdown editor for both developers and regular users. It still remainins a code source editor but it tries to give an apercu of the final HTML rendering while typing. For more demanding users there is also a live HTML preview available with scroll synchronization. 
+The editor aim is to provide an easy to use markdown editor for both developers and regular users. It still remains a code source editor but it tries to give an apercu of the final HTML rendering while typing. For more demanding users there is also a live HTML preview available with scroll synchronization. 
 
 Its primary goal is to write comments or small / medium documents. It is not especially designed to deal with large markdown documents.
 
@@ -51,7 +51,7 @@ The editor is distributed as one default css file and a javascript file that com
 The minified versions of these files are ending in `.min.js`.  
 The `build/qed.min.js` file is about **57K** and gziped is about **15K**.
 
-**Note**: Usually when using the markdown editor you will want to use the preview too - in that case it is better to define a custom stylesheet for the preview - oherwise you will end up with the browser defaults which are not very pretty.
+**Note**: Usually when using the markdown editor you will want to use the preview too - in that case it is better to define a custom stylesheet for the preview - otherwise you will end up with the browser defaults which are not very pretty.
 We have an example of such a stylesheet in `demo/preview.css` that you can use - it is not the best one - but surely better than the browser defaults.
 
 ## Building 
@@ -73,7 +73,7 @@ grunt
 
 ## Usage
 
-To use the editor you should include in your HTML page the editor javascript file (which one depends on your needs) and a styleshhet to configure the editor and optionally a stylesheet for the preview.  
+To use the editor you should include in your HTML page the editor javascript file (which one depends on your needs) and a stylesheet to configure the editor and optionally a stylesheet for the preview.  
 You can use the default stylesheets from `src/editor.css` and `demo/preview.css`.  
 For the example below we will use the complete qed build (containing all the dependencies): `build/qed-all.min.js`.
 
