@@ -23,6 +23,8 @@ Its primary goal is to write comments or small / medium documents. It is not esp
 
 The editor is implemented in pure javascript and it is based on the [Content Editable](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_Editable) browsers capability. 
 
+**Here is a [Live Editor Demo](http://quandora.github.io/qed/demo.html) that will open this Readme file in full size mode**.
+
 ## Dependencies
 
 There are no dependencies for the core part of the editor. 
@@ -40,9 +42,8 @@ Any *evergreen* browser (i.e. Chrome, Safari, Firefox, IE10+). To work in IE 9 i
 * Live preview (requires marked.js dependency)
 * Native spellcheck (uses the browser *content editable* capability).
 * Copy / Paste and customizable drag / drop. 
-* HTML pasted content is converted to markdown (not supported on IE).
+* HTML pasted content is converted to markdown (not supported on IE where the HTML is pasted as plain text).
 * Fully configurable suggest / autocompletion support.
-* Display a configurable alert when leaving the editor page which content was modified and not saved.
 * Extensibility through custom actions.
 * Minimal mode for inline editing (with no toolbar).
 * Editor mode with a customizable toolbar (you can remove or add custom actions as you want).
@@ -107,21 +108,222 @@ Put this in the page `head`:
 
 The simplest method to use the editor is to attach it to an existing `textarea` element:
 
+Given a textarea input with an id of `qed-demo` you can attach an editor to it by using the following code:
+
+```javascript
+var qed = Qed.create("#qed-demo");
+```
+
+This is the minimal code required to instantiate an editor.
+
+By default the editor height wil grow to display the entire content.  
+If you want to use a fixed height (with a scrollbar) then you must specify the height in the editor settings at creation.
+
+Example:
+
+```javascript
+var qed = Qed.create("#qed-demo", { height: 300 });
+```
+
+**Note** that by default no toolbar is displayed. See below in the "Defining the editor toolbar" section on how to enable the toolbar.
+
+### Editor settings.
+
+Here is a list with all the supported settings:
+
+* **height** - *integer*. Use a fixed height (the height is expressed in pixels and must be a positive integer).
+* **autofocus** - *boolean*. If true the editor will request the focus at creation time. The default is false.
+* **confirmOnLeave** - *string*. If defined a confirmation prompt will be displayed when the user is leaving the page and the editor is dirty (i.e. content was not save). The *string* value of this setting will be used as the prompt message.
+* **submittingClass** - *string*. The class that should be set on the containing form while the form is submited to be able to ignore the `confirmOnLeave` prompt when submitting. The default is 'submitting'. You can also set the `submitting` property on the editor container instance to achieve the same.
+* **fullscreen** - *boolean*. If true the editor is created in full page mode. The default is false. (You can switch later in "fullscreen" mode by invoking the appropiate editor action.
+* **leftBar** - *array*. Defined the content of the action bar which will be aligned on the left of the toolbar. The default is no toolbar. The action bar is defined as an array obj action objects.
+* **rightBar** - *array*. Defined the content of the action bar which will be aligned on the right of the toolbar. The default is no toolbar. The action bar is defined as an array obj action objects.
+* **suggest** - *object*. Define a suggestion implementation. No suggestion implementation is defined by default. See "Defining Editor Suggestions" section for more details.
+* **insertImage** - *function*. Define an action to insert an image. By default no insert image action is provided.
+This function should open a dialog to let the user upload or choose an image from an external service and when done to insert the image code at the current caret position.
+* **dropFiles** - *function*. Define a drop action. The function is called on browser `drop` event with two arguments: `files` and `event` where files is `event.dataTransfer.files`. This function is responsible to modify the editor content and to upload the dropped file if needed. By default no drop logi is provided.
+* **previewTransforms** - *array*. Define an array of tranformation functions to apply after the preview was generated. A transformation function will be called with two arguments: `element` and `focusOnCaret` where element is the preview element anf focusOnCaret is a boolean indicating if focus synchronization is enabled or not.
+
+### Defining the editor toolbar.
+
+The toolbar is made of two action bars. The first bar (the main one) aligned on the left and a second one is aligned on the right. The irght action bar can be used for actons like help etc.
+
+To enable the toolbar you must define at least one action bar. To define the left action bar you must specify a `leftBar` in the editor settings and to define the right bar you must specify a `rightBar` in the ditor settings. Both bars have the same format - an array of action objects.  
+An action is an objectin the following format:
+
+```javascript
+{name: "the_action_id", label: "A label for this action", title: "A tooltip for the action", exec: function(qed) {...}}
+```
+
+For the toggle like actions you can define to different labels - one to be displaued when the toggle is on the other one when it is off:
+
+```javascript
+{name: "the_action_id", labelOn: "A label for this action when toggle is ON", labelOff: "A label for this action when toggle is OFF", title: "A tooltip for the action", exec: function(qed) {...}}
+```
+
+if the `the_action_id` is a built-in action then you don't need to specify an `exec` function since built-in exec function bound to that action will be used. The `exec` must be defined only when there is not a built-in execution fucntion bound to the action ID.
+
+Usually you want to have an **icon** instead of a label. To do so you should use a HTML label which will insert a font icon. You can freely use [Font Awesome](https://fortawesome.github.io/Font-Awesome/) to do this.
+
+In order to use **Font Awesome** font icons include this in the document head:
+
+```html
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+```
+
+Here is an example for the built-in `bold` action by using the **bold** font icon defined by Font Awesome:
+
+```javascript
+{name: "bold", label: "<i class='fa fa-bold'></i>", title: "Bold"}
+```
+
+Most of the built-in actions already have shortcuts. For custom actions, to define a shortcut you must specify it in the `title` property at the end. Example:
+
+```javascript
+{name: "preview", labelOff: "<i class='fa fa-eye'></i>", labelOn: "<i class='fa fa-edit'></i>", title: 'Toggle Preview Mode (Ctrl+F)'}
+```
+
+The `title`ends in (Ctrl+F) which is defining the shortcut.
+
+To define a **separator** between two actions just use the string `"|"` as the action definition.
+
+Here is a complete  toolbar with all the built-in actions (this is using **Font Awesome** for the labels)
+
+```javascript
+...
+leftBar: [
+  {name: "undo", label: "<i class='fa fa-undo'></i>", title: "Undo"},
+  {name: "redo", label: "<i class='fa fa-repeat'></i>", title: "Redo"},
+  "|",        
+  {name: "bold", label: "<i class='fa fa-bold'></i>", title: "Bold"},
+  {name: "italic", label: "<i class='fa fa-italic'></i>", title: "Italic"},
+  {name: "strike", label: "<i class='fa fa-strikethrough'></i>", title: "Strikethrough", },
+  "|",
+  {name: "h1", label: "H1", title: "Heading 1"},
+  {name: "h2", label: "H2", title: "Heading 2"},
+  {name: "h3", label: "H3", title: "Heading 3"},
+  "|",
+  {name: "code", label: "<i class='fa fa-code'></i>", title: "Insert Code"},
+  {name: "quote", label: "<i class='fa fa-quote-right'></i>", title: "Block Quotes"},
+  "|",
+  {name: "ul", label: "<i class='fa fa-list-ul'></i>", title: "Unordered List"},
+  {name: "ol", label: "<i class='fa fa-list-ol'></i>", title: "Ordered List"},
+  "|",
+  {name: "link", label: "<i class='fa fa-link'></i>", title: "Insert Link"},
+  {name: "image", label: "<i class='fa fa-picture-o'></i>", title: "Insert Image"}
+],        
+rightBar: [
+  {name: "help", label: "<i class='fa fa-support'></i>", title: 'Markdown Cheatsheet', exec: function(container) { window.open("https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"); }},
+  {name: "preview", labelOff: "<i class='fa fa-eye'></i>", labelOn: "<i class='fa fa-edit'></i>", title: 'Toggle Preview Mode (Ctrl+F)'},
+  {name: "fullscreen", labelOff: "<i class='fa fa-external-link'></i>", labelOn: "<i class='fa fa-remove'></i>", title:'Toggle Fullscreen Mode (Shift+Ctrl+F)'}
+]
+...
+```
+**Note** that the `image` action requires an `insertImage` fucntion to be defined in the editor settings.
+
+### Defining custom themes.
+
+You can define your own themes using custom stylesheets. Here is an example of defining a **blue** toolbar theme for the editor toolbar:
+
+```
+.qed-container {
+    border: 1px solid #54ADE3;
+}
+.qed-toolbar {
+  background-color: #71BBE8;
+  color: white;
+}
+.qed-toolbar button {
+  color: white;
+}
+.qed-toolbar-item:hover {
+  background-color: #54ADE3;
+}
+```
+
+You can also customize the editor content styles.
+
+### Defining Custom Actions.
+
+Here is a naive example of a custom action:
+
+```
+{name: "myaction", label: "Ping!", title:'Ping (Alt+Ctrl+P)', exec: function(container) { alert('Pong!'); }}
+```
+
+Usually we will want to modify the editor content when executing an action. Modifying the markdown content is always done through a **Range** object. Any action you want to perform on the content will require you to interact with qed Range API. 
+
+To do a more sofisticated action we will have to use this *range* object to modify the content. 
+The current focus range is fetched using:
+
+```javascript
+var range = editor.getOrInitFocusRange();
+```
+
+where editor is the `editor instance` (and **not** the `editor container`!).
+When creating an editor using:
+
+```javascript
+var qed = Qed.create("#qed-demo");
+```
+
+the `qed` variable will be an instance of the editor container. You can get the editor instance by using:
+
+```
+var editor = qed.editor;
+```
+
+The **editor container** instance manages the toolbar, the custom actions and the editor instance. The **editor** instance manage the markdown content and provide an API to modify this content.
+
+We will modify our action to insert the 'Pong!' at the cursor position instead of displaying an alert message.
+
+Our action `exec` function is called with a `container` argument which is the editor container. We should thus retrieve the editor instance  through `container.editor` to write into the marlkdon document.
+
+First we need to get the current editor selection range:
+
+```javascript
+function myAction(container) {
+  var editor = container.editor;
+  var range = editor.getOrInitFocusRange();
+  range.insertText('Pong!').select();
+  editor.takeSnapshot(range);
+}
+```
+
+Let's explain what we've done here:
+
+1. `editor.getOrInitFocusRange()` just return the focus (i.e. selection) range of the editor. If the editor doesn't have the focus it will request the focus (and will place the caret to the begining of the markdown document).
+2. `range.insertText('Pong!').select()` is inserting the text "Pong!" at the caret position (removing selected text if any) then will refresh the caret (through `.select()` call).
+3. `editor.takeSnapshot(range)` will push our changes into the **Undo/Redo** stack. If we don't call this - the **Undo manager** will ignore the changes we've made.
+
+Now that we just defined our "more sofisticated" action we can add it like this to the editor:
+
+```javascript
+var qed = Qed.create("#qed-demo", {
+  height: 300,
+  leftBar: [
+    {name: "myaction", label: "Ping!", title:'Ping (Alt+Ctrl+P)', exec: myAction}
+  ]
+});
+```
+
+If you want to see more examples on how to use the range API just look in the sources for the built-in actions.
+
+
+### Defining Editor Suggestions.
+
+
 ### More?
 
 For more details look into the sources and in the `demo` directory.  
 
-## Demos
+## Live Examples
 
 ###  Readme Page Demo
 
 See this README in the editor [here](http://quandora.github.io/qed/demo.html).
 
 The default toolbar theme and actions are used. The editor is opened in **full page** mode. 
-
-**Note** that actions like insert link or insert image or any other actions can be customized. The insert image action is not available in the demo since it requires storage to upload images etc. But drag dropping images or inserting them through a nav-bar button is possible. You should just write a little bit of javascript code to enable and customize it.
-
-Also, it is easy to define your own actions and add them to the toolbar. If you don't want a default action you just omit her when defining the toolbar.
 
 ### Suggest Feature demo
 
@@ -133,7 +335,7 @@ When you type @{{LETTER}} the editor will try to suggest you countries starting 
 This example is using an internal array of countries.  
 But you can also use **AJAX** to fetch the suggest matchings you want to display.
 
-I will provide you soon an example on using ajax (through JQuery) for doing this.
+I will provide soon an example on using ajax (through JQuery) for doing this.
 
 </textarea>
 	  
