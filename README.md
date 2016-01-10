@@ -8,6 +8,8 @@ Its primary goal is to write comments or small / medium documents. It is not esp
 
 The editor is implemented in pure javascript and it is based on the [Content Editable](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_Editable) browsers capability. 
 
+You can see [here a demo](http://quandora.github.io/qed/demo.html) of the editor displaying this Readme page.
+
 ## Dependencies
 
 There are no dependencies for the core part of the editor. 
@@ -162,6 +164,8 @@ Most of the built-in actions already have shortcuts. For custom actions, to defi
 
 The `title`ends in (Ctrl+F) which is defining the shortcut.
 
+To define a **separator** between two actions just use the string `"|"` as the action definition.
+
 Here is a complete  toolbar with all the built-in actions (this is using **Font Awesome** for the labels)
 
 ```javascript
@@ -196,6 +200,28 @@ rightBar: [
 ```
 **Note** that the `image` action requires an `insertImage` fucntion to be defined in the editor settings.
 
+### Defining custom themes.
+
+You can define your own themes using custom stylesheets. Here is an example of defining a **blue** toolbar theme for the editor toolbar:
+
+```
+.qed-container {
+    border: 1px solid #54ADE3;
+}
+.qed-toolbar {
+  background-color: #71BBE8;
+  color: white;
+}
+.qed-toolbar button {
+  color: white;
+}
+.qed-toolbar-item:hover {
+  background-color: #54ADE3;
+}
+```
+
+You can also customize the editor content styles.
+
 ### Defining Editor Suggestions.
 
 
@@ -203,17 +229,13 @@ rightBar: [
 
 For more details look into the sources and in the `demo` directory.  
 
-## Demos
+## Live Examples
 
 ###  Readme Page Demo
 
 See this README in the editor [here](http://quandora.github.io/qed/demo.html).
 
 The default toolbar theme and actions are used. The editor is opened in **full page** mode. 
-
-**Note** that actions like insert link or insert image or any other actions can be customized. The insert image action is not available in the demo since it requires storage to upload images etc. But drag dropping images or inserting them through a nav-bar button is possible. You should just write a little bit of javascript code to enable and customize it.
-
-Also, it is easy to define your own actions and add them to the toolbar. If you don't want a default action you just omit her when defining the toolbar.
 
 ### Suggest Feature demo
 
