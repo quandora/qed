@@ -304,7 +304,7 @@ For more details look into the sources and in the `demo` directory.
 
 ## Live Examples
 
-1. [Readme Page Demo](http://quandora.github.io/qed/demo.html) - See this README page in the editor.
+1. [Readme Page Demo](http://quandora.github.io/qed/demo.html). See this README page in the editor.
 The default toolbar theme and actions are used. The editor is opened in **full page** mode. 
 2. [Minimal Editor Setup](http://quandora.github.io/qed/example1.html).
 The minimal code required to instantiated an ediyor on an existing textarea.
