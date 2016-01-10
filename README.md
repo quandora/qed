@@ -8,7 +8,7 @@ Its primary goal is to write comments or small / medium documents. It is not esp
 
 The editor is implemented in pure javascript and it is based on the [Content Editable](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_Editable) browsers capability. 
 
-Here is a **[Live Editor Demo](http://quandora.github.io/qed/demo.html)** that will open this Readme file in fullsize mode.
+**Here is a [Live Editor Demo](http://quandora.github.io/qed/demo.html) that will open this Readme file in full size mode**.
 
 ## Dependencies
 
