@@ -91,6 +91,36 @@ Put this in the page `head`:
 
 The simplest method to use the editor is to attach it to an existing `textarea` element:
 
+Given a textarea input with an id of `qed-demo` you can attach an editor to it by using the following code:
+
+```javascript
+var qed = Qed.create("#qed-demo");
+```
+
+This is the minimal code required to instantiate an editor.
+
+By default the editor height wil grow to display the entire content.  
+If you want to use a fixed height (with a scrollbar) then you must specify the height in the editor settings at creation.
+
+Example:
+
+```javascript
+var qed = Qed.create("#qed-demo", { height: 300 });
+```
+
+**Note** that by default no toolbar is displayed. See below in the "Defining the editor toolbar" section on how to enable the toolbar.
+
+Here is a list with all the supported settings:
+
+* suggest
+* insertImage
+* dropFiles
+* autofocus
+* confirmOnLeave
+* 
+
+
+
 ### More?
 
 For more details look into the sources and in the `demo` directory.  
