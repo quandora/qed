@@ -110,16 +110,23 @@ var qed = Qed.create("#qed-demo", { height: 300 });
 
 **Note** that by default no toolbar is displayed. See below in the "Defining the editor toolbar" section on how to enable the toolbar.
 
+### Editor settings.
+
 Here is a list with all the supported settings:
 
-* suggest
-* insertImage
-* dropFiles
-* autofocus
-* confirmOnLeave
-* 
+* **height** - **integer**. Use a fixed height (the height is expressed in pixels and must be a positive integer).
+* **autofocus** - **boolean**. If true the editor will request the focus at creation time. The default is false.
+* **confirmOnLeave** - *string*. If defined a confirmation prompt will be displayed when the user is leaving the page and the editor is dirty (i.e. content was not save). The *string* value of this setting will be used as the prompt message.
+* **submittingClass** - *string*. The class which will be set
+* **fullscreen** - *boolean*. If true the editor is created in full page mode. The default is false. (You can switch later in "fullscreen" mode by invoking the appropiate editor action.
+* **leftBar** - **. Defined the content of the action bar which will be aligned on the left of the toolbar. The default is no toolbar.
+* **rightBar** - **. Defined the content of the action bar which will be aligned on the right of the toolbar. The defualt is no toolbar.
+* **suggest** - **. Define a suggestion handler. No suggestion handler is defined by default.
+* **insertImage** - **.
+* **dropFiles** - **.
+* **previewTransforms** - **.
 
-
+### Defining the editor toolbar.
 
 ### More?
 
