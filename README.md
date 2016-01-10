@@ -129,6 +129,32 @@ This function should open a dialog to let the user upload or choose an image fro
 
 ### Defining the editor toolbar.
 
+The toolbar is made of two action bars. The first bar (the main one) aligned on the left and a second one is aligned on the right. The irght action bar can be used for actons like help etc.
+
+To enable the toolbar you must define at least one action bar. To define the left action bar you must specify a `leftBar` in the editor settings and to define the right bar you must specify a `rightBar` in the ditor settings. Both bars have the same format - an array of action objects.  
+An action is an objectin the following format:
+
+```javascript
+{name: "the_action_id", label: "A label for this action", title: "A tooltip for the action", exec: function(qed) {...}}
+```
+
+if the `the_action_id` is a built-in action then you must not specify an `exec` function. The `exec` function is required only for custom actions - and will be called when the custom action is invoked.
+
+Usually you want to have an icon instead of a label. To do so you should use an HTML definition for the label which will insert a font icon. You can freely use [Font Awesome](https://fortawesome.github.io/Font-Awesome/) to do this.
+
+Here is an example for the built-in `bold` action:
+
+```javascript
+{name: "bold", label: "<i class='fa fa-bold'></i>", title: "Bold"}
+```
+
+The default actions already have shortcuts. For custom actions, to define a shortcut you must specify it in the `title` property at the end. Example:
+
+```javascript
+{name: "preview", labelOff: "<i class='fa fa-eye'></i>", labelOn: "<i class='fa fa-edit'></i>", title: 'Toggle Preview Mode (Ctrl+F)'}
+```
+The `title`ends in (Ctrl+F) which is defining the shortcut.
+
 ### Defining Editor Suggestions.
 
 ### More?
@@ -157,4 +183,4 @@ When you type @{{LETTER}} the editor will try to suggest you countries starting 
 This example is using an internal array of countries.  
 But you can also use **AJAX** to fetch the suggest matchings you want to display.
 
-I will provide you soon an example on using ajax (through JQuery) for doing this.
+I will provide soon an example on using ajax (through JQuery) for doing this.
