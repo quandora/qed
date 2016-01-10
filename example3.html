@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="css/preview.css">
+	  <style>
+    .qed-container {
+        border: 1px solid #54ADE3;
+    }
+    .qed-toolbar {
+      background-color: #71BBE8;
+      color: white;
+    }
+    .qed-toolbar button {
+      color: white;
+    }
+    .qed-toolbar-item:hover {
+      background-color: #54ADE3;
+    }  
+	  </style>
+    <script type='text/javascript' src='js/qed-all.js'></script>    
+  </head>
+  <body>
+    <form id='qed-form'>
+      <textarea id='qed-demo'># Quandora Editor</textarea>
+    </form>
+    <script>
+	// Custom action
+	function myAction(container) {
+	  var editor = container.editor;
+	  var range = editor.getOrInitFocusRange();
+	  range.insertText('Pong!').select();
+	  editor.takeSnapshot(range);
+	}
+	// install the editor
+	var qed = Qed.create("#qed-demo", {
+	  height: 300,
+      autofocus: true,
+	  leftBar: [
+	    {name: "myaction", label: "Ping!", title:'Ping (Alt+Ctrl+P)', exec: myAction}
+	  ]
+	});
+    </script>
+
+  </body>
+</html>
