@@ -114,19 +114,22 @@ var qed = Qed.create("#qed-demo", { height: 300 });
 
 Here is a list with all the supported settings:
 
-* **height** - **integer**. Use a fixed height (the height is expressed in pixels and must be a positive integer).
-* **autofocus** - **boolean**. If true the editor will request the focus at creation time. The default is false.
+* **height** - *integer*. Use a fixed height (the height is expressed in pixels and must be a positive integer).
+* **autofocus** - *boolean*. If true the editor will request the focus at creation time. The default is false.
 * **confirmOnLeave** - *string*. If defined a confirmation prompt will be displayed when the user is leaving the page and the editor is dirty (i.e. content was not save). The *string* value of this setting will be used as the prompt message.
-* **submittingClass** - *string*. The class which will be set
+* **submittingClass** - *string*. The class that should be set on the containing form while the form is submited to be able to ignore the `confirmOnLeave` prompt when submitting. The default is 'submitting'. You can also set the `submitting` property on the editor container instance to achieve the same.
 * **fullscreen** - *boolean*. If true the editor is created in full page mode. The default is false. (You can switch later in "fullscreen" mode by invoking the appropiate editor action.
-* **leftBar** - **. Defined the content of the action bar which will be aligned on the left of the toolbar. The default is no toolbar.
-* **rightBar** - **. Defined the content of the action bar which will be aligned on the right of the toolbar. The defualt is no toolbar.
-* **suggest** - **. Define a suggestion handler. No suggestion handler is defined by default.
-* **insertImage** - **.
-* **dropFiles** - **.
-* **previewTransforms** - **.
+* **leftBar** - *array*. Defined the content of the action bar which will be aligned on the left of the toolbar. The default is no toolbar. The action bar is defined as an array obj action objects.
+* **rightBar** - *array*. Defined the content of the action bar which will be aligned on the right of the toolbar. The default is no toolbar. The action bar is defined as an array obj action objects.
+* **suggest** - *object*. Define a suggestion implementation. No suggestion implementation is defined by default. See "Defining Editor Suggestions" section for more details.
+* **insertImage** - *function*. Define an action to insert an image. By default no insert image action is provided.
+This function should open a dialog to let the user upload or choose an image from an external service and when done to insert the image code at the current caret position.
+* **dropFiles** - *function*. Define a drop action. The function is called on browser `drop` event with two arguments: `files` and `event` where files is `event.dataTransfer.files`. This function is responsible to modify the editor content and to upload the dropped file if needed. By default no drop logi is provided.
+* **previewTransforms** - *array*. Define an array of tranformation functions to apply after the preview was generated. A transformation function will be called with two arguments: `element` and `focusOnCaret` where element is the preview element anf focusOnCaret is a boolean indicating if focus synchronization is enabled or not.
 
 ### Defining the editor toolbar.
+
+### Defining Editor Suggestions.
 
 ### More?
 
