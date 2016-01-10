@@ -310,7 +310,7 @@ The default toolbar theme and actions are used. The editor is opened in **full p
 The minimal code required to instantiated an ediyor on an existing textarea.
 3. [Custom Action](http://quandora.github.io/qed/example2.html).
 Implementing a custom action (the PING/PONG action from above). The Toolbar is using the default style.
-4. [Custom Action](http://quandora.github.io/qed/example3.html).
+4. [Custom Action and Custom Toolbar Theme](http://quandora.github.io/qed/example3.html).
 Implementing a custom action (the PING/PONG action from above). The Toolbar is using a "blue" theme.
 5. [Suggest Feature](http://quandora.github.io/qed/example4.html).
 Providing a suggest implementation to suggest country names. Just type `@` followed by a country name to see suggestions popping up.
