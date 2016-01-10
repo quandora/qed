@@ -304,11 +304,14 @@ For more details look into the sources and in the `demo` directory.
 
 ## Live Examples
 
-* [Readme Page Demo](http://quandora.github.io/qed/demo.html) - See this README page in the editor.
+1. [Readme Page Demo](http://quandora.github.io/qed/demo.html) - See this README page in the editor.
 The default toolbar theme and actions are used. The editor is opened in **full page** mode. 
-* [Minimal Editor Setup](http://quandora.github.io/qed/example1.html).
+2. [Minimal Editor Setup](http://quandora.github.io/qed/example1.html).
 The minimal code required to instantiated an ediyor on an existing textarea.
-* [Custom Action](http://quandora.github.io/qed/example2.html).
+3. [Custom Action](http://quandora.github.io/qed/example2.html).
 Implementing a custom action (the PING/PONG action from above). The Toolbar is using the default style.
-* [Custom Action](http://quandora.github.io/qed/example3.html).
-Implementing a custom action (the PING/PONG 
+4. [Custom Action](http://quandora.github.io/qed/example3.html).
+Implementing a custom action (the PING/PONG action from above). The Toolbar is using a "blue" theme.
+5. [Suggest Feature](http://quandora.github.io/qed/example4.html).
+Providing a suggest implementation to suggest country names. Just type `@` followed by a country name to see suggestions popping up.
+
