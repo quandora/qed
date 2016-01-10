@@ -150,6 +150,12 @@ if the `the_action_id` is a built-in action then you don't need to specify an `e
 
 Usually you want to have an **icon** instead of a label. To do so you should use a HTML label which will insert a font icon. You can freely use [Font Awesome](https://fortawesome.github.io/Font-Awesome/) to do this.
 
+In order to use **Font Awesome** font icons include this in the document head:
+
+```html
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+```
+
 Here is an example for the built-in `bold` action by using the **bold** font icon defined by Font Awesome:
 
 ```javascript
@@ -273,7 +279,7 @@ Let's explain what we've done here:
 
 1. `editor.getOrInitFocusRange()` just return the focus (i.e. selection) range of the editor. If the editor doesn't have the focus it will request the focus (and will place the caret to the begining of the markdown document).
 2. `range.insertText('Pong!').select()` is inserting the text "Pong!" at the caret position (removing selected text if any) then will refresh the caret (through `.select()` call).
-3. `editor.takeSnapshot(range)` will push your changes into the **Undo/Redo** stack. If you don't call this - the **Undo manager** will ignore the canges you've made.
+3. `editor.takeSnapshot(range)` will push our changes into the **Undo/Redo** stack. If we don't call this - the **Undo manager** will ignore the changes we've made.
 
 Now that we just defined our "more sofisticated" action we can add it like this to the editor:
 
