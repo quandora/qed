@@ -138,24 +138,66 @@ An action is an objectin the following format:
 {name: "the_action_id", label: "A label for this action", title: "A tooltip for the action", exec: function(qed) {...}}
 ```
 
-if the `the_action_id` is a built-in action then you must not specify an `exec` function. The `exec` function is required only for custom actions - and will be called when the custom action is invoked.
+For the toggle like actions you can define to different labels - one to be displaued when the toggle is on the other one when it is off:
 
-Usually you want to have an icon instead of a label. To do so you should use an HTML definition for the label which will insert a font icon. You can freely use [Font Awesome](https://fortawesome.github.io/Font-Awesome/) to do this.
+```javascript
+{name: "the_action_id", labelOn: "A label for this action when toggle is ON", labelOff: "A label for this action when toggle is OFF", title: "A tooltip for the action", exec: function(qed) {...}}
+```
 
-Here is an example for the built-in `bold` action:
+if the `the_action_id` is a built-in action then you don't need to specify an `exec` function since built-in exec function bound to that action will be used. The `exec` must be defined only when there is not a built-in execution fucntion bound to the action ID.
+
+Usually you want to have an **icon** instead of a label. To do so you should use a HTML label which will insert a font icon. You can freely use [Font Awesome](https://fortawesome.github.io/Font-Awesome/) to do this.
+
+Here is an example for the built-in `bold` action by using the **bold** font icon defined by Font Awesome:
 
 ```javascript
 {name: "bold", label: "<i class='fa fa-bold'></i>", title: "Bold"}
 ```
 
-The default actions already have shortcuts. For custom actions, to define a shortcut you must specify it in the `title` property at the end. Example:
+Most of the built-in actions already have shortcuts. For custom actions, to define a shortcut you must specify it in the `title` property at the end. Example:
 
 ```javascript
 {name: "preview", labelOff: "<i class='fa fa-eye'></i>", labelOn: "<i class='fa fa-edit'></i>", title: 'Toggle Preview Mode (Ctrl+F)'}
 ```
+
 The `title`ends in (Ctrl+F) which is defining the shortcut.
 
+Here is a complete  toolbar with all the built-in actions (this is using **Font Awesome** for the labels)
+
+```javascript
+...
+leftBar: [
+  {name: "undo", label: "<i class='fa fa-undo'></i>", title: "Undo"},
+  {name: "redo", label: "<i class='fa fa-repeat'></i>", title: "Redo"},
+  "|",        
+  {name: "bold", label: "<i class='fa fa-bold'></i>", title: "Bold"},
+  {name: "italic", label: "<i class='fa fa-italic'></i>", title: "Italic"},
+  {name: "strike", label: "<i class='fa fa-strikethrough'></i>", title: "Strikethrough", },
+  "|",
+  {name: "h1", label: "H1", title: "Heading 1"},
+  {name: "h2", label: "H2", title: "Heading 2"},
+  {name: "h3", label: "H3", title: "Heading 3"},
+  "|",
+  {name: "code", label: "<i class='fa fa-code'></i>", title: "Insert Code"},
+  {name: "quote", label: "<i class='fa fa-quote-right'></i>", title: "Block Quotes"},
+  "|",
+  {name: "ul", label: "<i class='fa fa-list-ul'></i>", title: "Unordered List"},
+  {name: "ol", label: "<i class='fa fa-list-ol'></i>", title: "Ordered List"},
+  "|",
+  {name: "link", label: "<i class='fa fa-link'></i>", title: "Insert Link"},
+  {name: "image", label: "<i class='fa fa-picture-o'></i>", title: "Insert Image"}
+],        
+rightBar: [
+  {name: "help", label: "<i class='fa fa-support'></i>", title: 'Markdown Cheatsheet', exec: function(container) { window.open("https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"); }},
+  {name: "preview", labelOff: "<i class='fa fa-eye'></i>", labelOn: "<i class='fa fa-edit'></i>", title: 'Toggle Preview Mode (Ctrl+F)'},
+  {name: "fullscreen", labelOff: "<i class='fa fa-external-link'></i>", labelOn: "<i class='fa fa-remove'></i>", title:'Toggle Fullscreen Mode (Shift+Ctrl+F)'}
+]
+...
+```
+**Note** that the `image` action requires an `insertImage` fucntion to be defined in the editor settings.
+
 ### Defining Editor Suggestions.
+
 
 ### More?
 
