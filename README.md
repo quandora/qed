@@ -222,6 +222,73 @@ You can define your own themes using custom stylesheets. Here is an example of d
 
 You can also customize the editor content styles.
 
+### Defining Custom Actions.
+
+Here is a naive example of a custom action:
+
+```
+{name: "myaction", label: "Ping!", title:'Ping (Alt+Ctrl+P)', exec: function(container) { alert('Pong!'); }}
+```
+
+Usually we will want to modify the editor content when executing an action. Modifying the markdown content is always done through a **Range** object. Any action you want to perform on the content will require you to interact with qed Range API. 
+
+To do a more sofisticated action we will have to use this *range* object to modify the content. 
+The current focus range is fetched using:
+
+```javascript
+var range = editor.getOrInitFocusRange();
+```
+
+where editor is the `editor instance` (and **not** the `editor container`!).
+When creating an editor using:
+
+```javascript
+var qed = Qed.create("#qed-demo");
+```
+
+the `qed` variable will be an instance of the editor container. You can get the editor instance by using:
+
+```
+var editor = qed.editor;
+```
+
+The **editor container** instance manages the toolbar, the custom actions and the editor instance. The **editor** instance manage the markdown content and provide an API to modify this content.
+
+We will modify our action to insert the 'Pong!' at the cursor position instead of displaying an alert message.
+
+Our action `exec` function is called with a `container` argument which is the editor container. We should thus retrieve the editor instance  through `container.editor` to write into the marlkdon document.
+
+First we need to get the current editor selection range:
+
+```javascript
+function myAction(container) {
+  var editor = container.editor;
+  var range = editor.getOrInitFocusRange();
+  range.insertText('Pong!').select();
+  editor.takeSnapshot(range);
+}
+```
+
+Let's explain what we've done here:
+
+1. `editor.getOrInitFocusRange()` just return the focus (i.e. selection) range of the editor. If the editor doesn't have the focus it will request the focus (and will place the caret to the begining of the markdown document).
+2. `range.insertText('Pong!').select()` is inserting the text "Pong!" at the caret position (removing selected text if any) then will refresh the caret (through `.select()` call).
+3. `editor.takeSnapshot(range)` will push your changes into the **Undo/Redo** stack. If you don't call this - the **Undo manager** will ignore the canges you've made.
+
+Now that we just defined our "more sofisticated" action we can add it like this to the editor:
+
+```javascript
+var qed = Qed.create("#qed-demo", {
+  height: 300,
+  leftBar: [
+    {name: "myaction", label: "Ping!", title:'Ping (Alt+Ctrl+P)', exec: myAction}
+  ]
+});
+```
+
+If you want to see more examples on how to use the range API just look in the sources for the built-in actions.
+
+
 ### Defining Editor Suggestions.
 
 
