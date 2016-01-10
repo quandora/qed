@@ -304,20 +304,11 @@ For more details look into the sources and in the `demo` directory.
 
 ## Live Examples
 
-###  Readme Page Demo
-
-See this README in the editor [here](http://quandora.github.io/qed/demo.html).
-
+* [Readme Page Demo](http://quandora.github.io/qed/demo.html) - See this README page in the editor.
 The default toolbar theme and actions are used. The editor is opened in **full page** mode. 
-
-### Suggest Feature demo
-
-See the suggest feature at work [here](http://quandora.github.io/qed/suggest-demo.html).
-
-The editor is using a *blue theme* fo the toolbar (look in the `head` for the style override) and it adds a simple **suggest** functionality.
-When you type @{{LETTER}} the editor will try to suggest you countries starting with {{LETTER}}.
-
-This example is using an internal array of countries.  
-But you can also use **AJAX** to fetch the suggest matchings you want to display.
-
-I will provide soon an example on using ajax (through JQuery) for doing this.
+* [Minimal Editor Setup](http://quandora.github.io/qed/example1.html).
+The minimal code required to instantiated an ediyor on an existing textarea.
+* [Custom Action](http://quandora.github.io/qed/example2.html).
+Implementing a custom action (the PING/PONG action from above). The Toolbar is using the default style.
+* [Custom Action](http://quandora.github.io/qed/example3.html).
+Implementing a custom action (the PING/PONG 
