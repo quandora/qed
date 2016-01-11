@@ -35,6 +35,27 @@
 <p><strong>Here is a <a href="http://quandora.github.io/qed/demo.html">Live Editor Demo</a> that will open this Readme file in full size mode</strong>.</p>
 
 <h2>
+<a id="live-examples" class="anchor" href="#live-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Live Examples</h2>
+
+<ol>
+<li>
+<a href="http://quandora.github.io/qed/demo.html">Readme Page Demo</a>. See this README page in the editor.
+The default toolbar theme and actions are used. The editor is opened in <strong>full page</strong> mode. </li>
+<li>
+<a href="http://quandora.github.io/qed/example1.html">Minimal Editor Setup</a>.
+The minimal code required to instantiated an editor on an existing textarea.</li>
+<li>
+<a href="http://quandora.github.io/qed/example2.html">Custom Action</a>.
+Implementing a custom action (the PING/PONG action from above). The Toolbar is using the default style.</li>
+<li>
+<a href="http://quandora.github.io/qed/example3.html">Custom Action and Custom Toolbar Theme</a>.
+Implementing a custom action (the PING/PONG action from above). The Toolbar is using a "blue" theme.</li>
+<li>
+<a href="http://quandora.github.io/qed/example4.html">Suggest Feature</a>.
+Providing a suggest implementation to suggest country names. Just type <code>@</code> followed by a country name to see suggestions popping up.</li>
+</ol>
+
+<h2>
 <a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h2>
 
 <p>There are no dependencies for the core part of the editor. 
@@ -172,16 +193,16 @@ If you want to use a fixed height (with a scrollbar) then you must specify the h
 <li>
 <strong>fullscreen</strong> - <em>boolean</em>. If true the editor is created in full page mode. The default is false. (You can switch later in "fullscreen" mode by invoking the appropiate editor action.</li>
 <li>
-<strong>leftBar</strong> - <em>array</em>. Defined the content of the action bar which will be aligned on the left of the toolbar. The default is no toolbar. The action bar is defined as an array obj action objects.</li>
+<strong>leftBar</strong> - <em>array</em>. Defined the content of the action bar which will be aligned on the left of the toolbar. The default is no toolbar. The action bar is defined as an array of action objects.</li>
 <li>
-<strong>rightBar</strong> - <em>array</em>. Defined the content of the action bar which will be aligned on the right of the toolbar. The default is no toolbar. The action bar is defined as an array obj action objects.</li>
+<strong>rightBar</strong> - <em>array</em>. Defined the content of the action bar which will be aligned on the right of the toolbar. The default is no toolbar. The action bar is defined as an array of action objects.</li>
 <li>
 <strong>suggest</strong> - <em>object</em>. Define a suggestion implementation. No suggestion implementation is defined by default. See "Defining Editor Suggestions" section for more details.</li>
 <li>
 <strong>insertImage</strong> - <em>function</em>. Define an action to insert an image. By default no insert image action is provided.
 This function should open a dialog to let the user upload or choose an image from an external service and when done to insert the image code at the current caret position.</li>
 <li>
-<strong>dropFiles</strong> - <em>function</em>. Define a drop action. The function is called on browser <code>drop</code> event with two arguments: <code>files</code> and <code>event</code> where files is <code>event.dataTransfer.files</code>. This function is responsible to modify the editor content and to upload the dropped file if needed. By default no drop logi is provided.</li>
+<strong>dropFiles</strong> - <em>function</em>. Define a drop action. The function is called on browser <code>drop</code> event with two arguments: <code>files</code> and <code>event</code> where files is <code>event.dataTransfer.files</code>. This function is responsible to modify the editor content and to upload the dropped file if needed. By default no drop logic is provided.</li>
 <li>
 <strong>previewTransforms</strong> - <em>array</em>. Define an array of tranformation functions to apply after the preview was generated. A transformation function will be called with two arguments: <code>element</code> and <code>focusOnCaret</code> where element is the preview element anf focusOnCaret is a boolean indicating if focus synchronization is enabled or not.</li>
 </ul>
@@ -191,16 +212,16 @@ This function should open a dialog to let the user upload or choose an image fro
 
 <p>The toolbar is made of two action bars. The first bar (the main one) aligned on the left and a second one is aligned on the right. The irght action bar can be used for actons like help etc.</p>
 
-<p>To enable the toolbar you must define at least one action bar. To define the left action bar you must specify a <code>leftBar</code> in the editor settings and to define the right bar you must specify a <code>rightBar</code> in the ditor settings. Both bars have the same format - an array of action objects.<br>
-An action is an objectin the following format:</p>
+<p>To enable the toolbar you must define at least one action bar. To define the left action bar you must specify a <code>leftBar</code> in the editor settings and to define the right bar you must specify a <code>rightBar</code>. Both bars have the same format - an array of action objects.<br>
+An action is an object in the following format:</p>
 
 <div class="highlight highlight-source-js"><pre>{name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>the_action_id<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>A label for this action<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>A tooltip for the action<span class="pl-pds">"</span></span>, <span class="pl-en">exec</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">qed</span>) {...}}</pre></div>
 
-<p>For the toggle like actions you can define to different labels - one to be displaued when the toggle is on the other one when it is off:</p>
+<p>For the toggle like actions you can define to different labels - one to be displayed when the toggle is on the other one when it is off:</p>
 
 <div class="highlight highlight-source-js"><pre>{name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>the_action_id<span class="pl-pds">"</span></span>, labelOn<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>A label for this action when toggle is ON<span class="pl-pds">"</span></span>, labelOff<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>A label for this action when toggle is OFF<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>A tooltip for the action<span class="pl-pds">"</span></span>, <span class="pl-en">exec</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">qed</span>) {...}}</pre></div>
 
-<p>if the <code>the_action_id</code> is a built-in action then you don't need to specify an <code>exec</code> function since built-in exec function bound to that action will be used. The <code>exec</code> must be defined only when there is not a built-in execution fucntion bound to the action ID.</p>
+<p>if the <code>the_action_id</code> is a built-in action then you don't need to specify an <code>exec</code> function since built-in exec function bound to that action will be used. The <code>exec</code> must be defined only when there is not a built-in execution function bound to the action ID.</p>
 
 <p>Usually you want to have an <strong>icon</strong> instead of a label. To do so you should use a HTML label which will insert a font icon. You can freely use <a href="https://fortawesome.github.io/Font-Awesome/">Font Awesome</a> to do this.</p>
 
@@ -454,27 +475,6 @@ The popup has already the class: <code>qed-suggest-popup</code>
 <a id="more" class="anchor" href="#more" aria-hidden="true"><span class="octicon octicon-link"></span></a>More?</h3>
 
 <p>For more details look into the sources and in the <code>demo</code> directory.  </p>
-
-<h2>
-<a id="live-examples" class="anchor" href="#live-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Live Examples</h2>
-
-<ol>
-<li>
-<a href="http://quandora.github.io/qed/demo.html">Readme Page Demo</a>. See this README page in the editor.
-The default toolbar theme and actions are used. The editor is opened in <strong>full page</strong> mode. </li>
-<li>
-<a href="http://quandora.github.io/qed/example1.html">Minimal Editor Setup</a>.
-The minimal code required to instantiated an ediyor on an existing textarea.</li>
-<li>
-<a href="http://quandora.github.io/qed/example2.html">Custom Action</a>.
-Implementing a custom action (the PING/PONG action from above). The Toolbar is using the default style.</li>
-<li>
-<a href="http://quandora.github.io/qed/example3.html">Custom Action and Custom Toolbar Theme</a>.
-Implementing a custom action (the PING/PONG action from above). The Toolbar is using a "blue" theme.</li>
-<li>
-<a href="http://quandora.github.io/qed/example4.html">Suggest Feature</a>.
-Providing a suggest implementation to suggest country names. Just type <code>@</code> followed by a country name to see suggestions popping up.</li>
-</ol>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/quandora/qed">Qed</a> is maintained by <a href="https://github.com/quandora">quandora</a>.</span>
