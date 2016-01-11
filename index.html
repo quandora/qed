@@ -32,6 +32,8 @@
 
 <p>The editor is implemented in pure javascript and it is based on the <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_Editable">Content Editable</a> browsers capability. </p>
 
+<p><strong>Here is a <a href="http://quandora.github.io/qed/demo.html">Live Editor Demo</a> that will open this Readme file in full size mode</strong>.</p>
+
 <h2>
 <a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h2>
 
@@ -59,9 +61,8 @@ Only two optional dependencies are needed when using the preview and live previe
 <li>Live preview (requires marked.js dependency)</li>
 <li>Native spellcheck (uses the browser <em>content editable</em> capability).</li>
 <li>Copy / Paste and customizable drag / drop. </li>
-<li>HTML pasted content is converted to markdown (not supported on IE).</li>
+<li>HTML pasted content is converted to markdown (not supported on IE where the HTML is pasted as plain text).</li>
 <li>Fully configurable suggest / autocompletion support.</li>
-<li>Display a configurable alert when leaving the editor page which content was modified and not saved.</li>
 <li>Extensibility through custom actions.</li>
 <li>Minimal mode for inline editing (with no toolbar).</li>
 <li>Editor mode with a customizable toolbar (you can remove or add custom actions as you want).</li>
@@ -139,37 +140,343 @@ Put this in the page <code>head</code>:</p>
 
 <p>The simplest method to use the editor is to attach it to an existing <code>textarea</code> element:</p>
 
+<p>Given a textarea input with an id of <code>qed-demo</code> you can attach an editor to it by using the following code:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> qed <span class="pl-k">=</span> <span class="pl-smi">Qed</span>.<span class="pl-en">create</span>(<span class="pl-s"><span class="pl-pds">"</span>#qed-demo<span class="pl-pds">"</span></span>);</pre></div>
+
+<p>This is the minimal code required to instantiate an editor.</p>
+
+<p>By default the editor height wil grow to display the entire content.<br>
+If you want to use a fixed height (with a scrollbar) then you must specify the height in the editor settings at creation.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> qed <span class="pl-k">=</span> <span class="pl-smi">Qed</span>.<span class="pl-en">create</span>(<span class="pl-s"><span class="pl-pds">"</span>#qed-demo<span class="pl-pds">"</span></span>, { height<span class="pl-k">:</span> <span class="pl-c1">300</span> });</pre></div>
+
+<p><strong>Note</strong> that by default no toolbar is displayed. See below in the "Defining the editor toolbar" section on how to enable the toolbar.</p>
+
+<h3>
+<a id="editor-settings" class="anchor" href="#editor-settings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Editor settings.</h3>
+
+<p>Here is a list with all the supported settings:</p>
+
+<ul>
+<li>
+<strong>height</strong> - <em>integer</em>. Use a fixed height (the height is expressed in pixels and must be a positive integer).</li>
+<li>
+<strong>autofocus</strong> - <em>boolean</em>. If true the editor will request the focus at creation time. The default is false.</li>
+<li>
+<strong>confirmOnLeave</strong> - <em>string</em>. If defined a confirmation prompt will be displayed when the user is leaving the page and the editor is dirty (i.e. content was not save). The <em>string</em> value of this setting will be used as the prompt message.</li>
+<li>
+<strong>submittingClass</strong> - <em>string</em>. The class that should be set on the containing form while the form is submited to be able to ignore the <code>confirmOnLeave</code> prompt when submitting. The default is 'submitting'. You can also set the <code>submitting</code> property on the editor container instance to achieve the same.</li>
+<li>
+<strong>fullscreen</strong> - <em>boolean</em>. If true the editor is created in full page mode. The default is false. (You can switch later in "fullscreen" mode by invoking the appropiate editor action.</li>
+<li>
+<strong>leftBar</strong> - <em>array</em>. Defined the content of the action bar which will be aligned on the left of the toolbar. The default is no toolbar. The action bar is defined as an array obj action objects.</li>
+<li>
+<strong>rightBar</strong> - <em>array</em>. Defined the content of the action bar which will be aligned on the right of the toolbar. The default is no toolbar. The action bar is defined as an array obj action objects.</li>
+<li>
+<strong>suggest</strong> - <em>object</em>. Define a suggestion implementation. No suggestion implementation is defined by default. See "Defining Editor Suggestions" section for more details.</li>
+<li>
+<strong>insertImage</strong> - <em>function</em>. Define an action to insert an image. By default no insert image action is provided.
+This function should open a dialog to let the user upload or choose an image from an external service and when done to insert the image code at the current caret position.</li>
+<li>
+<strong>dropFiles</strong> - <em>function</em>. Define a drop action. The function is called on browser <code>drop</code> event with two arguments: <code>files</code> and <code>event</code> where files is <code>event.dataTransfer.files</code>. This function is responsible to modify the editor content and to upload the dropped file if needed. By default no drop logi is provided.</li>
+<li>
+<strong>previewTransforms</strong> - <em>array</em>. Define an array of tranformation functions to apply after the preview was generated. A transformation function will be called with two arguments: <code>element</code> and <code>focusOnCaret</code> where element is the preview element anf focusOnCaret is a boolean indicating if focus synchronization is enabled or not.</li>
+</ul>
+
+<h3>
+<a id="defining-the-editor-toolbar" class="anchor" href="#defining-the-editor-toolbar" aria-hidden="true"><span class="octicon octicon-link"></span></a>Defining the editor toolbar.</h3>
+
+<p>The toolbar is made of two action bars. The first bar (the main one) aligned on the left and a second one is aligned on the right. The irght action bar can be used for actons like help etc.</p>
+
+<p>To enable the toolbar you must define at least one action bar. To define the left action bar you must specify a <code>leftBar</code> in the editor settings and to define the right bar you must specify a <code>rightBar</code> in the ditor settings. Both bars have the same format - an array of action objects.<br>
+An action is an objectin the following format:</p>
+
+<div class="highlight highlight-source-js"><pre>{name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>the_action_id<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>A label for this action<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>A tooltip for the action<span class="pl-pds">"</span></span>, <span class="pl-en">exec</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">qed</span>) {...}}</pre></div>
+
+<p>For the toggle like actions you can define to different labels - one to be displaued when the toggle is on the other one when it is off:</p>
+
+<div class="highlight highlight-source-js"><pre>{name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>the_action_id<span class="pl-pds">"</span></span>, labelOn<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>A label for this action when toggle is ON<span class="pl-pds">"</span></span>, labelOff<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>A label for this action when toggle is OFF<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>A tooltip for the action<span class="pl-pds">"</span></span>, <span class="pl-en">exec</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">qed</span>) {...}}</pre></div>
+
+<p>if the <code>the_action_id</code> is a built-in action then you don't need to specify an <code>exec</code> function since built-in exec function bound to that action will be used. The <code>exec</code> must be defined only when there is not a built-in execution fucntion bound to the action ID.</p>
+
+<p>Usually you want to have an <strong>icon</strong> instead of a label. To do so you should use a HTML label which will insert a font icon. You can freely use <a href="https://fortawesome.github.io/Font-Awesome/">Font Awesome</a> to do this.</p>
+
+<p>In order to use <strong>Font Awesome</strong> font icons include this in the document head:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">link</span> <span class="pl-e">rel</span>=<span class="pl-s"><span class="pl-pds">"</span>stylesheet<span class="pl-pds">"</span></span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css<span class="pl-pds">"</span></span>&gt;</pre></div>
+
+<p>Here is an example for the built-in <code>bold</code> action by using the <strong>bold</strong> font icon defined by Font Awesome:</p>
+
+<div class="highlight highlight-source-js"><pre>{name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>bold<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-bold'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Bold<span class="pl-pds">"</span></span>}</pre></div>
+
+<p>Most of the built-in actions already have shortcuts. For custom actions, to define a shortcut you must specify it in the <code>title</code> property at the end. Example:</p>
+
+<div class="highlight highlight-source-js"><pre>{name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>preview<span class="pl-pds">"</span></span>, labelOff<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-eye'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, labelOn<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-edit'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Toggle Preview Mode (Ctrl+F)<span class="pl-pds">'</span></span>}</pre></div>
+
+<p>The <code>title</code>ends in (Ctrl+F) which is defining the shortcut.</p>
+
+<p>To define a <strong>separator</strong> between two actions just use the string <code>"|"</code> as the action definition.</p>
+
+<p>Here is a complete  toolbar with all the built-in actions (this is using <strong>Font Awesome</strong> for the labels)</p>
+
+<div class="highlight highlight-source-js"><pre>...
+leftBar<span class="pl-k">:</span> [
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>undo<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-undo'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Undo<span class="pl-pds">"</span></span>},
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>redo<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-repeat'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Redo<span class="pl-pds">"</span></span>},
+  <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span>,        
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>bold<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-bold'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Bold<span class="pl-pds">"</span></span>},
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>italic<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-italic'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Italic<span class="pl-pds">"</span></span>},
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>strike<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-strikethrough'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Strikethrough<span class="pl-pds">"</span></span>, },
+  <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span>,
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>h1<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>H1<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Heading 1<span class="pl-pds">"</span></span>},
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>h2<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>H2<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Heading 2<span class="pl-pds">"</span></span>},
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>h3<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>H3<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Heading 3<span class="pl-pds">"</span></span>},
+  <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span>,
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>code<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-code'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Insert Code<span class="pl-pds">"</span></span>},
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>quote<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-quote-right'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Block Quotes<span class="pl-pds">"</span></span>},
+  <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span>,
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>ul<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-list-ul'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Unordered List<span class="pl-pds">"</span></span>},
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>ol<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-list-ol'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Ordered List<span class="pl-pds">"</span></span>},
+  <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span>,
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>link<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-link'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Insert Link<span class="pl-pds">"</span></span>},
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>image<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-picture-o'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Insert Image<span class="pl-pds">"</span></span>}
+],        
+rightBar<span class="pl-k">:</span> [
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>help<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-support'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Markdown Cheatsheet<span class="pl-pds">'</span></span>, <span class="pl-en">exec</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">container</span>) { <span class="pl-smi">window</span>.<span class="pl-c1">open</span>(<span class="pl-s"><span class="pl-pds">"</span>https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet<span class="pl-pds">"</span></span>); }},
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>preview<span class="pl-pds">"</span></span>, labelOff<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-eye'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, labelOn<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-edit'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Toggle Preview Mode (Ctrl+F)<span class="pl-pds">'</span></span>},
+  {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>fullscreen<span class="pl-pds">"</span></span>, labelOff<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-external-link'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, labelOn<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;i class='fa fa-remove'&gt;&lt;/i&gt;<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>Toggle Fullscreen Mode (Shift+Ctrl+F)<span class="pl-pds">'</span></span>}
+]
+...</pre></div>
+
+<p><strong>Note</strong> that the <code>image</code> action requires an <code>insertImage</code> fucntion to be defined in the editor settings.</p>
+
+<h3>
+<a id="defining-custom-themes" class="anchor" href="#defining-custom-themes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Defining custom themes.</h3>
+
+<p>You can define your own themes using custom stylesheets. Here is an example of defining a <strong>blue</strong> toolbar theme for the editor toolbar:</p>
+
+<pre><code>.qed-container {
+    border: 1px solid #54ADE3;
+}
+.qed-toolbar {
+  background-color: #71BBE8;
+  color: white;
+}
+.qed-toolbar button {
+  color: white;
+}
+.qed-toolbar-item:hover {
+  background-color: #54ADE3;
+}
+</code></pre>
+
+<p>You can also customize the editor content styles.</p>
+
+<h3>
+<a id="defining-custom-actions" class="anchor" href="#defining-custom-actions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Defining Custom Actions.</h3>
+
+<p>Here is a naive example of a custom action:</p>
+
+<pre><code>{name: "myaction", label: "Ping!", title:'Ping (Alt+Ctrl+P)', exec: function(container) { alert('Pong!'); }}
+</code></pre>
+
+<p>Usually we will want to modify the editor content when executing an action. Modifying the markdown content is always done through a <strong>Range</strong> object. Any action you want to perform on the content will require you to interact with qed Range API. </p>
+
+<p>To do a more sofisticated action we will have to use this <em>range</em> object to modify the content. 
+The current focus range is fetched using:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> range <span class="pl-k">=</span> <span class="pl-smi">editor</span>.<span class="pl-en">getOrInitFocusRange</span>();</pre></div>
+
+<p>where editor is the <code>editor instance</code> (and <strong>not</strong> the <code>editor container</code>!).
+When creating an editor using:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> qed <span class="pl-k">=</span> <span class="pl-smi">Qed</span>.<span class="pl-en">create</span>(<span class="pl-s"><span class="pl-pds">"</span>#qed-demo<span class="pl-pds">"</span></span>);</pre></div>
+
+<p>the <code>qed</code> variable will be an instance of the editor container. You can get the editor instance by using:</p>
+
+<pre><code>var editor = qed.editor;
+</code></pre>
+
+<p>The <strong>editor container</strong> instance manages the toolbar, the custom actions and the editor instance. The <strong>editor</strong> instance manage the markdown content and provide an API to modify this content.</p>
+
+<p>We will modify our action to insert the 'Pong!' at the cursor position instead of displaying an alert message.</p>
+
+<p>Our action <code>exec</code> function is called with a <code>container</code> argument which is the editor container. We should thus retrieve the editor instance  through <code>container.editor</code> to write into the marlkdon document.</p>
+
+<p>First we need to get the current editor selection range:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">myAction</span>(<span class="pl-smi">container</span>) {
+  <span class="pl-k">var</span> editor <span class="pl-k">=</span> <span class="pl-smi">container</span>.<span class="pl-smi">editor</span>;
+  <span class="pl-k">var</span> range <span class="pl-k">=</span> <span class="pl-smi">editor</span>.<span class="pl-en">getOrInitFocusRange</span>();
+  <span class="pl-smi">range</span>.<span class="pl-en">insertText</span>(<span class="pl-s"><span class="pl-pds">'</span>Pong!<span class="pl-pds">'</span></span>).<span class="pl-c1">select</span>();
+  <span class="pl-smi">editor</span>.<span class="pl-en">takeSnapshot</span>(range);
+}</pre></div>
+
+<p>Let's explain what we've done here:</p>
+
+<ol>
+<li>
+<code>editor.getOrInitFocusRange()</code> just return the focus (i.e. selection) range of the editor. If the editor doesn't have the focus it will request the focus (and will place the caret to the begining of the markdown document).</li>
+<li>
+<code>range.insertText('Pong!').select()</code> is inserting the text "Pong!" at the caret position (removing selected text if any) then will refresh the caret (through <code>.select()</code> call).</li>
+<li>
+<code>editor.takeSnapshot(range)</code> will push our changes into the <strong>Undo/Redo</strong> stack. If we don't call this - the <strong>Undo manager</strong> will ignore the changes we've made.</li>
+</ol>
+
+<p>Now that we just defined our "more sofisticated" action we can add it like this to the editor:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> qed <span class="pl-k">=</span> <span class="pl-smi">Qed</span>.<span class="pl-en">create</span>(<span class="pl-s"><span class="pl-pds">"</span>#qed-demo<span class="pl-pds">"</span></span>, {
+  height<span class="pl-k">:</span> <span class="pl-c1">300</span>,
+  leftBar<span class="pl-k">:</span> [
+    {name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>myaction<span class="pl-pds">"</span></span>, label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Ping!<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>Ping (Alt+Ctrl+P)<span class="pl-pds">'</span></span>, exec<span class="pl-k">:</span> myAction}
+  ]
+});</pre></div>
+
+<p>If you want to see more examples on how to use the range API just look in the sources for the built-in actions.</p>
+
+<h3>
+<a id="accessing-editor-content" class="anchor" href="#accessing-editor-content" aria-hidden="true"><span class="octicon octicon-link"></span></a>Accessing Editor Content.</h3>
+
+<p>Given the following editor container instance:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> qed <span class="pl-k">=</span> <span class="pl-smi">Qed</span>.<span class="pl-en">create</span>(<span class="pl-s"><span class="pl-pds">"</span>#qed-demo<span class="pl-pds">"</span></span>);</pre></div>
+
+<p>You can set the editor content like this:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">qed</span>.<span class="pl-en">setInitialText</span>(<span class="pl-s"><span class="pl-pds">'</span>some **markdown** initial code<span class="pl-pds">'</span></span>);</pre></div>
+
+<p>or </p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">qed</span>.<span class="pl-en">setInitialText</span>(<span class="pl-s"><span class="pl-pds">'</span>some **markdown** code<span class="pl-pds">'</span></span>);</pre></div>
+
+<p>The difference between the two is that the first is not triggering the IUndo manager so the operation is not undoable.
+It is usefull to intialize the editor content. The second form should be used to replace the content of the editor.</p>
+
+<p>To retrieve the current markdown content from the editor you should call:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> text <span class="pl-k">=</span> <span class="pl-smi">qed</span>.<span class="pl-en">getText</span>();</pre></div>
+
+<p><strong>Note</strong> that when attaching the editor to a textarea element its content will be automatically injected back in the textarea on editor blur event.</p>
+
+<h3>
+<a id="defining-editor-suggestions" class="anchor" href="#defining-editor-suggestions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Defining Editor Suggestions.</h3>
+
+<p>To provide a suggestion implementation you should define an object which implement the following contract:</p>
+
+<div class="highlight highlight-source-js"><pre>{
+ <span class="pl-en">term</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">range</span>) { ... }
+ <span class="pl-en">fetch</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">term</span>, <span class="pl-smi">callback</span>) { ... } 
+ popupClass<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>my-suggestion-popup<span class="pl-pds">'</span></span>,
+ delay<span class="pl-k">:</span> <span class="pl-c1">300</span>,
+ <span class="pl-en">text</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">item</span>) { <span class="pl-k">return</span> item; },
+ <span class="pl-en">id</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">item</span>) { <span class="pl-k">return</span> <span class="pl-v">this</span>.<span class="pl-c1">text</span>; },
+ <span class="pl-en">value</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">item</span>) { <span class="pl-k">return</span> <span class="pl-v">this</span>.<span class="pl-c1">text</span>; }
+ <span class="pl-en">render</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">item</span>) { ... }
+}</pre></div>
+
+<p>where <code>fetch</code> and <code>term</code> are mandatory. The rest of the contract can be ommited or not - depending on your suggestion logic.</p>
+
+<p>Here is an explanation of each field:</p>
+
+<ul>
+<li>
+<strong>term</strong> - <em>required</em> - called after something was typed into the editor to check if a suggestion can be performed. Return null or undefined if no suggestion should be done. Otherwise it returns an array of 2 elements: [term, offset] where temr is the term to lookup for suggestions and offset is the offset on the focus line where the term to replace by the suggestion begins.</li>
+<li>
+<strong>fetch</strong> - <em>required</em> -  lookup the matching results given the term return by the term() function. The lookup result (an array of items) must be passed back to the callback argument to fill the popup with suggestions.</li>
+<li>
+<strong>popupClass</strong> - <em>optional</em> - an additional class to be added to the suggestion popup. 
+The popup has already the class: <code>qed-suggest-popup</code>
+</li>
+<li>
+<strong>delay</strong> - <em>optional</em> - the delay in ms after the user stopped typing before starting a fetch on the typed term. Default is 300 ms.</li>
+<li>
+<strong>text</strong> - <em>optional</em> - a function to extract the text from the returned items. The text is displayed in the popup for each item. The default is to return the item itself (usefull when the item is a string and not an object)</li>
+<li>
+<strong>id</strong> - <em>optional</em> - a function to extract the id from the returned items. The id is used to uniquely identify each item. The default is to use the same value as the item text.</li>
+<li>
+<strong>value</strong> - <em>optional</em> - a function to extract the value that wull be inserted in the markdown document if the item is selected. The default is to use the same value as the item text.</li>
+<li>
+<strong>render</strong> - <em>optional</em> - an optional function to customize the item rendering. Must return a DOM element that represent the item. The default is to use a <code>LI</code> element.</li>
+</ul>
+
+<p>Here is a simple suggestion implementation which will lookup terms in a local COUNTRIES array. To recognize that a suggestion must be performed the user must type a '@' followed by the country prefix:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> <span class="pl-c1">SUGGEST_IMPL</span> <span class="pl-k">=</span> {
+  <span class="pl-en">fetch</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">term</span>, <span class="pl-smi">callback</span>) {
+    <span class="pl-k">var</span> result <span class="pl-k">=</span> [];
+    <span class="pl-k">if</span> (term <span class="pl-k">&amp;&amp;</span> <span class="pl-smi">term</span>.<span class="pl-c1">charAt</span>(<span class="pl-c1">0</span>) <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>@<span class="pl-pds">'</span></span>) {
+      term <span class="pl-k">=</span> <span class="pl-smi">term</span>.<span class="pl-c1">substring</span>(<span class="pl-c1">1</span>).<span class="pl-c1">toLowerCase</span>();
+      <span class="pl-k">var</span> qlen <span class="pl-k">=</span> <span class="pl-smi">term</span>.<span class="pl-c1">length</span>;
+      <span class="pl-k">for</span> (<span class="pl-k">var</span> i<span class="pl-k">=</span><span class="pl-c1">0</span>,len<span class="pl-k">=</span><span class="pl-smi">COUNTRIES</span>.<span class="pl-c1">length</span>; i<span class="pl-k">&lt;</span>len;i<span class="pl-k">++</span>) {
+        <span class="pl-k">var</span> city <span class="pl-k">=</span> <span class="pl-c1">COUNTRIES</span>[i].<span class="pl-c1">toLowerCase</span>();
+        <span class="pl-k">if</span> (<span class="pl-smi">city</span>.<span class="pl-c1">length</span> <span class="pl-k">&gt;=</span> qlen <span class="pl-k">&amp;&amp;</span> <span class="pl-smi">city</span>.<span class="pl-c1">substring</span>(<span class="pl-c1">0</span>, qlen) <span class="pl-k">===</span> term) {
+          <span class="pl-smi">result</span>.<span class="pl-c1">push</span>(<span class="pl-c1">COUNTRIES</span>[i]);
+        }
+      }
+    } <span class="pl-k">else</span> {
+      result <span class="pl-k">=</span> <span class="pl-c1">COUNTRIES</span>;
+    }
+    <span class="pl-en">callback</span>(result);
+  },
+  <span class="pl-c">// return [term, offset] (offset is the offset on the line where the term to replace by the suggestion begins)</span>
+  <span class="pl-en">term</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">range</span>) {
+    <span class="pl-k">var</span> tagChar <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>@<span class="pl-pds">'</span></span>;
+    <span class="pl-k">if</span> (<span class="pl-k">!</span><span class="pl-smi">range</span>.<span class="pl-en">isCollapsed</span>()) {
+      <span class="pl-k">return</span> <span class="pl-c1">null</span>;            
+    }        
+    <span class="pl-k">var</span> text <span class="pl-k">=</span> <span class="pl-smi">range</span>.<span class="pl-smi">focusLine</span>.<span class="pl-en">getText</span>();
+    <span class="pl-k">var</span> caret <span class="pl-k">=</span> <span class="pl-smi">range</span>.<span class="pl-smi">focusOffset</span>;
+    <span class="pl-k">var</span> i <span class="pl-k">=</span> <span class="pl-smi">text</span>.<span class="pl-c1">lastIndexOf</span>(tagChar, caret);
+    <span class="pl-k">if</span> (i <span class="pl-k">&lt;</span> <span class="pl-c1">0</span>) {
+      <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+    }
+    <span class="pl-k">if</span> (i <span class="pl-k">&gt;</span> <span class="pl-c1">0</span> <span class="pl-k">&amp;&amp;</span> <span class="pl-smi">text</span>.<span class="pl-c1">charCodeAt</span>(i<span class="pl-k">-</span><span class="pl-c1">1</span>) <span class="pl-k">&gt;</span> <span class="pl-c1">32</span>) {
+      <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+    }
+    <span class="pl-k">var</span> prefix <span class="pl-k">=</span> <span class="pl-smi">text</span>.<span class="pl-c1">substring</span>(i, caret);
+    <span class="pl-k">if</span> (<span class="pl-sr"><span class="pl-pds">/</span><span class="pl-c1">\s</span><span class="pl-pds">/</span></span>.<span class="pl-c1">test</span>(prefix)) { <span class="pl-c">// if it contains whitespaces ignore</span>
+      <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+    }
+    <span class="pl-c">//require min 1 char: prefix.length &gt; 1</span>
+    <span class="pl-k">if</span> (<span class="pl-smi">prefix</span>.<span class="pl-c1">length</span> <span class="pl-k">===</span> <span class="pl-c1">1</span>) <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+    <span class="pl-k">return</span> [prefix, i];
+  },
+  popupClass<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>test-popup<span class="pl-pds">'</span></span>, <span class="pl-c">// the popup class</span>
+};
+
+<span class="pl-c">// install the editor in 'qed-demo' element</span>
+<span class="pl-k">var</span> qed <span class="pl-k">=</span> <span class="pl-smi">Qed</span>.<span class="pl-en">create</span>(<span class="pl-s"><span class="pl-pds">"</span>#qed-demo<span class="pl-pds">"</span></span>, { height<span class="pl-k">:</span> <span class="pl-c1">300</span>, autofocus<span class="pl-k">:</span><span class="pl-c1">true</span>, suggest<span class="pl-k">:</span> <span class="pl-c1">SUGGEST_IMPL</span> });</pre></div>
+
+<p>The <code>fetch</code> method can also use AJAX to asynchronously fetch suggestions. When suggestions are available on the client the <code>callback</code> argument must be called with those suggestions.</p>
+
 <h3>
 <a id="more" class="anchor" href="#more" aria-hidden="true"><span class="octicon octicon-link"></span></a>More?</h3>
 
 <p>For more details look into the sources and in the <code>demo</code> directory.  </p>
 
 <h2>
-<a id="demos" class="anchor" href="#demos" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demos</h2>
+<a id="live-examples" class="anchor" href="#live-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Live Examples</h2>
 
-<h3>
-<a id="readme-page-demo" class="anchor" href="#readme-page-demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Readme Page Demo</h3>
-
-<p>See this README in the editor <a href="http://quandora.github.io/qed/demo.html">here</a>.</p>
-
-<p>The default toolbar theme and actions are used. The editor is opened in <strong>full page</strong> mode. </p>
-
-<p><strong>Note</strong> that actions like insert link or insert image or any other actions can be customized. The insert image action is not available in the demo since it requires storage to upload images etc. But drag dropping images or inserting them through a nav-bar button is possible. You should just write a little bit of javascript code to enable and customize it.</p>
-
-<p>Also, it is easy to define your own actions and add them to the toolbar. If you don't want a default action you just omit her when defining the toolbar.</p>
-
-<h3>
-<a id="suggest-feature-demo" class="anchor" href="#suggest-feature-demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Suggest Feature demo</h3>
-
-<p>See the suggest feature at work <a href="http://quandora.github.io/qed/suggest-demo.html">here</a>.</p>
-
-<p>The editor is using a <em>blue theme</em> fo the toolbar (look in the <code>head</code> for the style override) and it adds a simple <strong>suggest</strong> functionality.
-When you type @{{LETTER}} the editor will try to suggest you countries starting with {{LETTER}}.</p>
-
-<p>This example is using an internal array of countries.<br>
-But you can also use <strong>AJAX</strong> to fetch the suggest matchings you want to display.</p>
-
-<p>I will provide you soon an example on using ajax (through JQuery) for doing this.</p>
+<ol>
+<li>
+<a href="http://quandora.github.io/qed/demo.html">Readme Page Demo</a>. See this README page in the editor.
+The default toolbar theme and actions are used. The editor is opened in <strong>full page</strong> mode. </li>
+<li>
+<a href="http://quandora.github.io/qed/example1.html">Minimal Editor Setup</a>.
+The minimal code required to instantiated an ediyor on an existing textarea.</li>
+<li>
+<a href="http://quandora.github.io/qed/example2.html">Custom Action</a>.
+Implementing a custom action (the PING/PONG action from above). The Toolbar is using the default style.</li>
+<li>
+<a href="http://quandora.github.io/qed/example3.html">Custom Action and Custom Toolbar Theme</a>.
+Implementing a custom action (the PING/PONG action from above). The Toolbar is using a "blue" theme.</li>
+<li>
+<a href="http://quandora.github.io/qed/example4.html">Suggest Feature</a>.
+Providing a suggest implementation to suggest country names. Just type <code>@</code> followed by a country name to see suggestions popping up.</li>
+</ol>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/quandora/qed">Qed</a> is maintained by <a href="https://github.com/quandora">quandora</a>.</span>
