@@ -304,9 +304,7 @@ When creating an editor using:</p>
 
 <p>We will modify our action to insert the 'Pong!' at the cursor position instead of displaying an alert message.</p>
 
-<p>Our action <code>exec</code> function is called with a <code>container</code> argument which is the editor container. We should thus retrieve the editor instance  through <code>container.editor</code> to write into the marlkdon document.</p>
-
-<p>First we need to get the current editor selection range:</p>
+<p>Our action <code>exec</code> function is called with a <code>container</code> argument which is the editor container. We should thus retrieve the editor instance  through <code>container.editor</code> to write into the markdown document.</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">myAction</span>(<span class="pl-smi">container</span>) {
   <span class="pl-k">var</span> editor <span class="pl-k">=</span> <span class="pl-smi">container</span>.<span class="pl-smi">editor</span>;
@@ -352,8 +350,8 @@ When creating an editor using:</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-smi">qed</span>.<span class="pl-en">setInitialText</span>(<span class="pl-s"><span class="pl-pds">'</span>some **markdown** code<span class="pl-pds">'</span></span>);</pre></div>
 
-<p>The difference between the two is that the first is not triggering the IUndo manager so the operation is not undoable.
-It is usefull to intialize the editor content. The second form should be used to replace the content of the editor.</p>
+<p>The difference between the two is that the first is not triggering the <em>Undo Manager</em> so the operation is not undoable.
+It is usefull to initialize the editor content. The second form should be used to replace the editor content.</p>
 
 <p>To retrieve the current markdown content from the editor you should call:</p>
 
@@ -383,7 +381,7 @@ It is usefull to intialize the editor content. The second form should be used to
 
 <ul>
 <li>
-<strong>term</strong> - <em>required</em> - called after something was typed into the editor to check if a suggestion can be performed. Return null or undefined if no suggestion should be done. Otherwise it returns an array of 2 elements: [term, offset] where temr is the term to lookup for suggestions and offset is the offset on the focus line where the term to replace by the suggestion begins.</li>
+<strong>term</strong> - <em>required</em> - called after something was typed into the editor to check if a suggestion can be performed. Return null or undefined if no suggestion should be done. Otherwise it returns an array of 2 elements: [term, offset] where term is the term to lookup for suggestions and offset is the offset on the focus line where the term to replace by the suggestion begins.</li>
 <li>
 <strong>fetch</strong> - <em>required</em> -  lookup the matching results given the term return by the term() function. The lookup result (an array of items) must be passed back to the callback argument to fill the popup with suggestions.</li>
 <li>
