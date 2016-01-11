@@ -312,7 +312,7 @@ or
 qed.setInitialText('some **markdown** code');
 ```
 
-The difference between the two is that the first is not triggering the IUndo manager so the operation is not undoable.
+The difference between the two is that the first is not triggering the *Undo Manager* so the operation is not undoable.
 It is usefull to intialize the editor content. The second form should be used to replace the content of the editor.
 
 To retrieve the current markdown content from the editor you should call:
@@ -345,7 +345,7 @@ where `fetch` and `term` are mandatory. The rest of the contract can be ommited 
 
 Here is an explanation of each field:
 
-* **term** - *required* - called after something was typed into the editor to check if a suggestion can be performed. Return null or undefined if no suggestion should be done. Otherwise it returns an array of 2 elements: [term, offset] where temr is the term to lookup for suggestions and offset is the offset on the focus line where the term to replace by the suggestion begins.
+* **term** - *required* - called after something was typed into the editor to check if a suggestion can be performed. Return null or undefined if no suggestion should be done. Otherwise it returns an array of 2 elements: [term, offset] where term is the term to lookup for suggestions and offset is the offset on the focus line where the term to replace by the suggestion begins.
 * **fetch** - *required* -  lookup the matching results given the term return by the term() function. The lookup result (an array of items) must be passed back to the callback argument to fill the popup with suggestions.
 * **popupClass** - *optional* - an additional class to be added to the suggestion popup. 
 The popup has already the class: `qed-suggest-popup`
