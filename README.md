@@ -296,7 +296,35 @@ If you want to see more examples on how to use the range API just look in the so
 
 ### Accessing Editor Content.
 
-To access the editor content just call container.value
+Given the following editor container instance:
+
+```javascript
+var qed = Qed.create("#qed-demo");
+```
+
+You can set the editor content like this:
+
+```javascript
+qed.setInitialText('some **markdown** initial code');
+```
+
+or 
+
+```javascript
+qed.setInitialText('some **markdown** code');
+```
+
+The difference between the two is that the first is not triggering the IUndo manager so the operation is not undoable.
+It is usefull to intialize the editor content. The second form should be used to replace the content of the editor.
+
+To retrieve the current markdown content from the editor you should call:
+
+```javascript
+var text = qed.getText();
+```
+
+**Note** that when attaching the editor to a textarea element its content will be automatically injected back in the textarea on editor blur event.
+
 
 ### Defining Editor Suggestions.
 
