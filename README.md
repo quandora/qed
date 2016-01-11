@@ -262,9 +262,7 @@ The **editor container** instance manages the toolbar, the custom actions and th
 
 We will modify our action to insert the 'Pong!' at the cursor position instead of displaying an alert message.
 
-Our action `exec` function is called with a `container` argument which is the editor container. We should thus retrieve the editor instance  through `container.editor` to write into the marlkdon document.
-
-First we need to get the current editor selection range:
+Our action `exec` function is called with a `container` argument which is the editor container. We should thus retrieve the editor instance  through `container.editor` to write into the markdown document.
 
 ```javascript
 function myAction(container) {
