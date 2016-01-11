@@ -294,9 +294,92 @@ var qed = Qed.create("#qed-demo", {
 
 If you want to see more examples on how to use the range API just look in the sources for the built-in actions.
 
+### Accessing Editor Content.
+
+To access the editor content just call container.value
 
 ### Defining Editor Suggestions.
 
+To provide a suggestion implementation you should define an object which implement the following contract:
+
+```javascript
+{
+ term: function(range) { ... }
+ fetch: function(term, callback) { ... } 
+ popupClass: 'my-suggestion-popup',
+ delay: 300,
+ text: function(item) { return item; },
+ id: function(item) { return this.text; },
+ value: function(item) { return this.text; }
+ render: function(item) { ... }
+}
+```
+
+where `fetch` and `term` are mandatory. The rest of the contract can be ommited or not - depending on your suggestion logic.
+
+Here is an explanation of each field:
+
+* **term** - *required* - called after something was typed into the editor to check if a suggestion can be performed. Return null or undefined if no suggestion should be done. Otherwise it returns an array of 2 elements: [term, offset] where temr is the term to lookup for suggestions and offset is the offset on the focus line where the term to replace by the suggestion begins.
+* **fetch** - *required* -  lookup the matching results given the term return by the term() function. The lookup result (an array of items) must be passed back to the callback argument to fill the popup with suggestions.
+* **popupClass** - *optional* - an additional class to be added to the suggestion popup. 
+The popup has already the class: `qed-suggest-popup`
+* **delay** - *optional* - the delay in ms after the user stopped typing before starting a fetch on the typed term. Default is 300 ms.
+* **text** - *optional* - a function to extract the text from the returned items. The text is displayed in the popup for each item. The default is to return the item itself (usefull when the item is a string and not an object)
+* **id** - *optional* - a function to extract the id from the returned items. The id is used to uniquely identify each item. The default is to use the same value as the item text.
+* **value** - *optional* - a function to extract the value that wull be inserted in the markdown document if the item is selected. The default is to use the same value as the item text.
+* **render** - *optional* - an optional function to customize the item rendering. Must return a DOM element that represent the item. The default is to use a `LI` element.
+
+Here is a simple suggestion implementation which will lookup terms in a local COUNTRIES array. To recognize that a suggestion must be performed the user must type a '@' followed by the country prefix:
+
+```javascript
+var SUGGEST_IMPL = {
+  fetch: function(term, callback) {
+    var result = [];
+    if (term && term.charAt(0) === '@') {
+      term = term.substring(1).toLowerCase();
+      var qlen = term.length;
+      for (var i=0,len=COUNTRIES.length; i<len;i++) {
+        var city = COUNTRIES[i].toLowerCase();
+        if (city.length >= qlen && city.substring(0, qlen) === term) {
+          result.push(COUNTRIES[i]);
+        }
+      }
+    } else {
+      result = COUNTRIES;
+    }
+    callback(result);
+  },
+  // return [term, offset] (offset is the offset on the line where the term to replace by the suggestion begins)
+  term: function(range) {
+    var tagChar = '@';
+    if (!range.isCollapsed()) {
+      return null;            
+    }        
+    var text = range.focusLine.getText();
+    var caret = range.focusOffset;
+    var i = text.lastIndexOf(tagChar, caret);
+    if (i < 0) {
+      return null;
+    }
+    if (i > 0 && text.charCodeAt(i-1) > 32) {
+      return null;
+    }
+    var prefix = text.substring(i, caret);
+    if (/\s/.test(prefix)) { // if it contains whitespaces ignore
+      return null;
+    }
+    //require min 1 char: prefix.length > 1
+    if (prefix.length === 1) return null;
+    return [prefix, i];
+  },
+  popupClass: 'test-popup', // the popup class
+};
+
+// install the editor in 'qed-demo' element
+var qed = Qed.create("#qed-demo", { height: 300, autofocus:true, suggest: SUGGEST_IMPL });
+```
+
+The `fetch` method can also use AJAX to asynchronously fetch suggestions. When suggestions are available on the client the `callback` argument must be called with those suggestions.
 
 ### More?
 
