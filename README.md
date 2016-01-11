@@ -10,6 +10,19 @@ The editor is implemented in pure javascript and it is based on the [Content Edi
 
 **Here is a [Live Editor Demo](http://quandora.github.io/qed/demo.html) that will open this Readme file in full size mode**.
 
+## Live Examples
+
+1. [Readme Page Demo](http://quandora.github.io/qed/demo.html). See this README page in the editor.
+The default toolbar theme and actions are used. The editor is opened in **full page** mode. 
+2. [Minimal Editor Setup](http://quandora.github.io/qed/example1.html).
+The minimal code required to instantiated an editor on an existing textarea.
+3. [Custom Action](http://quandora.github.io/qed/example2.html).
+Implementing a custom action (the PING/PONG action from above). The Toolbar is using the default style.
+4. [Custom Action and Custom Toolbar Theme](http://quandora.github.io/qed/example3.html).
+Implementing a custom action (the PING/PONG action from above). The Toolbar is using a "blue" theme.
+5. [Suggest Feature](http://quandora.github.io/qed/example4.html).
+Providing a suggest implementation to suggest country names. Just type `@` followed by a country name to see suggestions popping up.
+
 ## Dependencies
 
 There are no dependencies for the core part of the editor. 
@@ -121,32 +134,32 @@ Here is a list with all the supported settings:
 * **confirmOnLeave** - *string*. If defined a confirmation prompt will be displayed when the user is leaving the page and the editor is dirty (i.e. content was not save). The *string* value of this setting will be used as the prompt message.
 * **submittingClass** - *string*. The class that should be set on the containing form while the form is submited to be able to ignore the `confirmOnLeave` prompt when submitting. The default is 'submitting'. You can also set the `submitting` property on the editor container instance to achieve the same.
 * **fullscreen** - *boolean*. If true the editor is created in full page mode. The default is false. (You can switch later in "fullscreen" mode by invoking the appropiate editor action.
-* **leftBar** - *array*. Defined the content of the action bar which will be aligned on the left of the toolbar. The default is no toolbar. The action bar is defined as an array obj action objects.
-* **rightBar** - *array*. Defined the content of the action bar which will be aligned on the right of the toolbar. The default is no toolbar. The action bar is defined as an array obj action objects.
+* **leftBar** - *array*. Defined the content of the action bar which will be aligned on the left of the toolbar. The default is no toolbar. The action bar is defined as an array of action objects.
+* **rightBar** - *array*. Defined the content of the action bar which will be aligned on the right of the toolbar. The default is no toolbar. The action bar is defined as an array of action objects.
 * **suggest** - *object*. Define a suggestion implementation. No suggestion implementation is defined by default. See "Defining Editor Suggestions" section for more details.
 * **insertImage** - *function*. Define an action to insert an image. By default no insert image action is provided.
 This function should open a dialog to let the user upload or choose an image from an external service and when done to insert the image code at the current caret position.
-* **dropFiles** - *function*. Define a drop action. The function is called on browser `drop` event with two arguments: `files` and `event` where files is `event.dataTransfer.files`. This function is responsible to modify the editor content and to upload the dropped file if needed. By default no drop logi is provided.
+* **dropFiles** - *function*. Define a drop action. The function is called on browser `drop` event with two arguments: `files` and `event` where files is `event.dataTransfer.files`. This function is responsible to modify the editor content and to upload the dropped file if needed. By default no drop logic is provided.
 * **previewTransforms** - *array*. Define an array of tranformation functions to apply after the preview was generated. A transformation function will be called with two arguments: `element` and `focusOnCaret` where element is the preview element anf focusOnCaret is a boolean indicating if focus synchronization is enabled or not.
 
 ### Defining the editor toolbar.
 
 The toolbar is made of two action bars. The first bar (the main one) aligned on the left and a second one is aligned on the right. The irght action bar can be used for actons like help etc.
 
-To enable the toolbar you must define at least one action bar. To define the left action bar you must specify a `leftBar` in the editor settings and to define the right bar you must specify a `rightBar` in the ditor settings. Both bars have the same format - an array of action objects.  
-An action is an objectin the following format:
+To enable the toolbar you must define at least one action bar. To define the left action bar you must specify a `leftBar` in the editor settings and to define the right bar you must specify a `rightBar`. Both bars have the same format - an array of action objects.  
+An action is an object in the following format:
 
 ```javascript
 {name: "the_action_id", label: "A label for this action", title: "A tooltip for the action", exec: function(qed) {...}}
 ```
 
-For the toggle like actions you can define to different labels - one to be displaued when the toggle is on the other one when it is off:
+For the toggle like actions you can define to different labels - one to be displayed when the toggle is on the other one when it is off:
 
 ```javascript
 {name: "the_action_id", labelOn: "A label for this action when toggle is ON", labelOff: "A label for this action when toggle is OFF", title: "A tooltip for the action", exec: function(qed) {...}}
 ```
 
-if the `the_action_id` is a built-in action then you don't need to specify an `exec` function since built-in exec function bound to that action will be used. The `exec` must be defined only when there is not a built-in execution fucntion bound to the action ID.
+if the `the_action_id` is a built-in action then you don't need to specify an `exec` function since built-in exec function bound to that action will be used. The `exec` must be defined only when there is not a built-in execution function bound to the action ID.
 
 Usually you want to have an **icon** instead of a label. To do so you should use a HTML label which will insert a font icon. You can freely use [Font Awesome](https://fortawesome.github.io/Font-Awesome/) to do this.
 
@@ -410,17 +423,3 @@ The `fetch` method can also use AJAX to asynchronously fetch suggestions. When s
 ### More?
 
 For more details look into the sources and in the `demo` directory.  
-
-## Live Examples
-
-1. [Readme Page Demo](http://quandora.github.io/qed/demo.html). See this README page in the editor.
-The default toolbar theme and actions are used. The editor is opened in **full page** mode. 
-2. [Minimal Editor Setup](http://quandora.github.io/qed/example1.html).
-The minimal code required to instantiated an ediyor on an existing textarea.
-3. [Custom Action](http://quandora.github.io/qed/example2.html).
-Implementing a custom action (the PING/PONG action from above). The Toolbar is using the default style.
-4. [Custom Action and Custom Toolbar Theme](http://quandora.github.io/qed/example3.html).
-Implementing a custom action (the PING/PONG action from above). The Toolbar is using a "blue" theme.
-5. [Suggest Feature](http://quandora.github.io/qed/example4.html).
-Providing a suggest implementation to suggest country names. Just type `@` followed by a country name to see suggestions popping up.
-
