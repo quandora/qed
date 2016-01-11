@@ -313,7 +313,7 @@ qed.setInitialText('some **markdown** code');
 ```
 
 The difference between the two is that the first is not triggering the *Undo Manager* so the operation is not undoable.
-It is usefull to intialize the editor content. The second form should be used to replace the content of the editor.
+It is usefull to initialize the editor content. The second form should be used to replace the editor content.
 
 To retrieve the current markdown content from the editor you should call:
 
